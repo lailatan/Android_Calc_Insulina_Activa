@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsulinaActivaActivity"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:background="@drawable/borde_color_fondo_oscuro">
+
+    <LinearLayout
+        style="@style/LinearLayoutNombrePantalla">
+
+
+        <TextView
+            style="@style/TextViewNombrePantalla"
+            android:text="@string/active_insulin_title"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/insulina_activa_contraste" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/LinearLayoutSeccion">
+
+                        <TextView
+                            style="@style/TextViewTitulo"
+                            android:text="@string/insulin_active_data" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextViewIngresoDatos"
+                                android:text="@string/insulin"/>
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/select_insuline"
+                                android:cursorVisible="false"
+                                android:focusable="false"
+                                android:tag="0"
+                                android:onClick="clickBuscarInsulina"
+                                android:id="@+id/insulinaET" />
+
+                            <TextView
+                                style="@style/estiloBotonPequeño"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:text="..."
+                                android:background="@drawable/borde_color_fino"
+                                android:textColor="@color/purple_700"
+                                android:tag="0"
+                                android:onClick="clickBuscarInsulina"
+                                android:id="@+id/buscarInsulinaBT" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight=".3"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:id="@+id/rapidaTV" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight=".7"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginRight="2dp"
+                                    android:text="@string/duration" />
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/duracionMinTV"
+                                    tools:text="180"/>
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/minutes_short" />
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:text="@string/duration_separator" />
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/duracionHorasTV"
+                                    tools:text="3.00"/>
+
+                                <TextView
+                                    style="@style/EditTextIngresoDatos"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/hours_short" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/LinearLayoutSeccion">
+
+                        <TextView
+                            style="@style/TextViewTitulo"
+                            android:text="@string/insulin_applied_data" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextViewIngresoDatos"
+                                android:text="@string/units_applied"/>
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:hint="00.00"
+                                android:layout_marginRight="5dp"
+                                android:inputType="numberDecimal"
+                                android:id="@+id/unidadesET" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextViewIngresoDatos"
+                                android:text="@string/time_applied"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/dd"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="2"
+                                android:id="@+id/diaET" />
+
+                            <TextView
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:text="/" />
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/MM"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="2"
+                                android:id="@+id/mesET" />
+
+                            <TextView
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:text="/" />
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/yyyy"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="4"
+                                android:id="@+id/anioET" />
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/hh"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="2"
+                                android:id="@+id/horaET" />
+
+                            <TextView
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:text=":" />
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:hint="@string/mm"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="2"
+                                android:id="@+id/minutoET" />
+
+                            <TextView
+                                style="@style/estiloBotonPequeño"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:text="@string/now"
+                                android:background="@drawable/borde_color_fino"
+                                android:textColor="@color/purple_700"
+                                android:tag="0"
+                                android:onClick="clickFechaHoraAhora"
+                                android:id="@+id/fechaHoraAhoraBT" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextViewIngresoDatos"
+                                android:text="@string/description"/>
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:hint="@string/enter_insulin_descrption"
+                                android:singleLine="false"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPersonName|textMultiLine"
+                                android:lines="8"
+                                android:minLines="10"
+                                android:gravity="top|start"
+                                android:maxLines="20"
+                                android:scrollbars="vertical"
+                                android:id="@+id/descripcionET" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="horizontal">
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABDerecha"
+            android:src="@drawable/ic_ok"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickFABGuardar"
+            android:id="@+id/guardarFAB"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABCentro"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickFABBorrar"
+            android:id="@+id/deleteFAB"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABIzquierda"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickFABCancelar"
+            android:id="@+id/cancelFAB"/>
+
+    </RelativeLayout>
+</LinearLayout>

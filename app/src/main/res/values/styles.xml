@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/purple_200</item>
+        <item name="android:windowBackground">@color/purple_200</item>
+    </style>
+
+    <style name="estiloBotonGrande">
+        <item name="android:layout_width">wrap_content</item>
+        <!-- <item name="android:layout_height">88dp</item> -->
+        <item name="android:layout_height">100dp</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+
+    <style name="estiloBotonPequeño">
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <style name="TextViewNombrePantalla">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">.8</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextViewTitulo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">@color/purple_200</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:background">@drawable/borde_color_pleno</item>
+    </style>
+
+    <style name="TextViewIngresoDatos">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@color/purple_200</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+
+    <style name="EditTextIngresoDatos">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/purple_200</item>
+        <item name="android:textColor">@color/purple_700</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LinearLayoutNombrePantalla">
+        <item name="android:background">@drawable/borde_color_fondo_oscuro</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="LinearLayoutSeccion">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@drawable/borde_color_fino</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="ListViewGeneral">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@color/purple_700</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_vertical</item>
+    </style>
+
+    <style name="FABIzquierda">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">false</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_margin">14dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@drawable/ic_back</item>
+    </style>
+    <style name="FABCentro">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">false</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_margin">14dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@drawable/ic_delete</item>
+    </style>
+
+    <style name="FABDerecha">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_margin">14dp</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="TablaRowTitulo">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bordes_tabla</item>
+        <item name="android:textColor">@color/purple_200</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TablaRowDato">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bordes_tabla</item>
+        <item name="android:textColor">@color/active</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textStyle">italic|bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/purple_700</item>
+    </style>
+
+</resources>

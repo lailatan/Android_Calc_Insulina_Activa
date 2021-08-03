@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsulinaActivity"
+    android:background="@drawable/borde_color_fondo_oscuro"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LinearLayoutNombrePantalla">
+
+        <TextView
+            style="@style/TextViewNombrePantalla"
+            android:text="@string/insulin_title" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/insulina_contraste" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/LinearLayoutSeccion">
+
+                    <TextView
+                        style="@style/TextViewTitulo"
+                        android:text="@string/general_data" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewIngresoDatos"
+                            android:text="@string/name"/>
+
+                        <EditText
+                            style="@style/EditTextIngresoDatos"
+                            android:hint="@string/enter_insulin_name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapSentences"
+                            android:id="@+id/nombreET" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViewIngresoDatos"
+                            android:text="@string/lab"/>
+
+                        <EditText
+                            style="@style/EditTextIngresoDatos"
+                            android:hint="@string/enter_lab_name"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName|textCapSentences"
+                            android:id="@+id/laboET" />
+                    </LinearLayout>
+
+                    <CheckBox
+                        style="@style/EditTextIngresoDatos"
+                        android:text="@string/quick_action"
+                        android:checked="true"
+                        android:id="@+id/rapidaCB"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/minHorasRG">
+
+                            <TextView
+                                style="@style/TextViewIngresoDatos"
+                                android:text="@string/duration"/>
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="0dp"
+                                android:layout_weight=".3"
+                                android:selectAllOnFocus="true"
+                                android:layout_marginRight="5dp"
+                                android:hint="00"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:digits="1234567890"
+                                android:maxLength="4"
+                                android:id="@+id/duracionMinET" />
+
+                            <EditText
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="0dp"
+                                android:layout_weight=".3"
+                                android:selectAllOnFocus="true"
+                                android:layout_marginRight="5dp"
+                                android:hint="00.00"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:maxLength="5"
+                                android:visibility="gone"
+                                android:id="@+id/duracionHorET" />
+
+                            <RadioButton
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="0dp"
+                                android:layout_weight=".40"
+                                android:text="@string/minutes_short"
+                                android:checked="true"
+                                android:onClick="clickMinHorasRB"
+                                android:id="@+id/minutosRB" />
+
+                            <RadioButton
+                                style="@style/EditTextIngresoDatos"
+                                android:layout_width="0dp"
+                                android:layout_weight=".4"
+                                android:text="@string/hours_short"
+                                android:onClick="clickMinHorasRB"
+                                android:id="@+id/horasRB"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TextViewIngresoDatos"
+                            android:text="@string/description"/>
+
+                        <EditText
+                            style="@style/EditTextIngresoDatos"
+                            android:layout_width="match_parent"
+                            android:hint="@string/enter_insulin_descrption"
+                            android:singleLine="false"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPersonName|textMultiLine"
+                            android:lines="8"
+                            android:minLines="10"
+                            android:gravity="top|start"
+                            android:maxLines="20"
+                            android:scrollbars="vertical"
+                            android:id="@+id/descripcionET" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABDerecha"
+            android:src="@drawable/ic_ok"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickGuardar"
+            android:id="@+id/guardarFAB"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABCentro"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickBorrar"
+            android:id="@+id/deleteFAB"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABIzquierda"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickCancelar"
+            android:id="@+id/cancelFAB"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsulinaActivaCalcularActivity"
+    android:background="@drawable/borde_color_fondo_oscuro"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LinearLayoutNombrePantalla">
+
+
+        <TextView
+            style="@style/TextViewNombrePantalla"
+            android:text="@string/active_insulin_title"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/insulina_activa_contraste" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LinearLayoutSeccion"
+        android:padding="5dp">
+
+
+        <TextView
+            style="@style/TextViewTitulo"
+            android:text="@string/calc_active_insulin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic|bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/purple_500"
+                android:id="@+id/horaCalculoTV" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <TableLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:weightSum="6">
+                <TableRow>
+                    <TextView
+                        style="@style/TablaRowTitulo"
+                        android:text="@string/active_insulin_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/purple_200" />
+
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        style="@style/TablaRowTitulo"
+                        android:text="@string/total"/>
+                    <TextView
+                        style="@style/TablaRowTitulo"
+                        android:text="@string/slow"/>
+                    <TextView
+                        style="@style/TablaRowTitulo"
+                        android:text="@string/quick"/>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        style="@style/TablaRowDato"
+                        android:id="@+id/insulinaTotalTV"/>
+                    <TextView
+                        style="@style/TablaRowDato"
+                        android:id="@+id/insulinaLentaTotalTV"/>
+                    <TextView
+                        style="@style/TablaRowDato"
+                        android:id="@+id/insulinaRapidaTotalTV"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/estiloBotonPequeño"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:background="@drawable/borde_color_fino"
+            android:onClick="clickLimpiar"
+            android:text="@string/erase_data"
+            android:textColor="@color/purple_700"
+            android:id="@+id/limpiarBT"/>
+
+        <TextView
+            style="@style/estiloBotonPequeño"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:background="@drawable/borde_color_fino"
+            android:onClick="clickCalcular"
+            android:text="@string/calc"
+            android:textColor="@color/purple_700"
+            android:id="@+id/calcularBT"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/LinearLayoutSeccion">
+
+
+        <TextView
+            style="@style/TextViewTitulo"
+            android:text="@string/app_insulins" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/borde_color_fino">
+
+            <ListView
+                style="@style/ListViewGeneral"
+                android:id="@+id/insulinaActivaLV"/>
+
+
+            <TextView
+                style="@style/TextViewIngresoDatos"
+                android:padding="10dp"
+                android:layout_marginBottom="200dp"
+                android:id="@+id/vacioTV"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                style="@style/FABDerecha"
+                android:src="@drawable/ic_add"
+                app:backgroundTint="@color/purple_200"
+                android:onClick="clickFABAgregar"
+                android:id="@+id/AddFAB"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                style="@style/FABIzquierda"
+                app:backgroundTint="@color/purple_200"
+                android:onClick="clickFABCancelar"
+                android:id="@+id/cancelFAB"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

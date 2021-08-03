@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Insulina Activa</string>
+    <string name="active_insulin_title">Insulina Activa</string>
+    <string name="active_insulin">Insulina Activa: </string>
+    <string name="calc_time">Hora Cálculo: </string>
+    <string name="calc_active_insulin">Cálculo de Insulina Activa</string>
+    <string name="clean">Limpiar</string>
+    <string name="erase_data">Borrar datos</string>
+    <string name="calc">Calcular</string>
+    <string name="units">Unidades: </string>
+    <string name="duration_minutes">Duración (min): </string>
+    <string name="app_time">Hora aplicación: </string>
+    <string name="active">ACTIVA</string>
+    <string name="inactive">INACTIVA</string>
+    <string name="not_found">No se encontraron datos.</string>
+    <string name="not_found_insulin">No hay dosis de insulina ingresadas.</string>
+    <string name="config">Configuración</string>
+    <string name="search_insulin">Buscar Insulina</string>
+    <string name="search_criterial">Criterio de búsqueda</string>
+    <string name="enter_insulin_name"><font size="15">Ingrese el nombre de la insulina</font></string>
+    <string name="search">Buscar</string>
+    <string name="quick">RÁPIDA</string>
+    <string name="slow">LENTA</string>
+    <string name="insulin">Insulina: </string>
+    <string name="general_data">Datos Generales</string>
+    <string name="name">Nombre: </string>
+    <string name="description">Descripción: </string>
+    <string name="enter_insulin_descrption"><font size="15">Ingrese aquí la descripcion o datos relevantes de la insulina.</font></string>
+    <string name="lab">Laboratorio: </string>
+    <string name="enter_lab_name"><font size="15">Ingrese el laboratorio de la insulina</font></string>
+    <string name="quick_action">Acción Rápida</string>
+    <string name="duration">Duración: </string>
+    <string name="minutes">Minutos </string>
+    <string name="minutes_short"> min </string>
+    <string name="hours">Horas </string>
+    <string name="hours_short"> hrs </string>
+    <string name="must_enter_name">Debe ingresar un nombre.</string>
+    <string name="must_enter_duration">Debe definir una duración.</string>
+    <string name="must_duration_bigger_than_zero">La duración debe ser un número mayor a 0.</string>
+    <string name="delete_insulin_confirmation">¿Desea eliminar esta insulina?</string>
+    <string name="delete_active_insulin_confirmation">¿Desea eliminar esta insulina activa?</string>
+    <string name="delete">Eliminar</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="delete_all_active_insulin_confirmation">¿Desea borrar todas las insulinas activas ingresadas?</string>
+    <string name="insulin_active_data">Datos de la insulina aplicada </string>
+    <string name="select_insuline"><font size="15">Seleccione una insulina</font></string>
+    <string name="units_applied">Unidades aplicadas: </string>
+    <string name="select_one_insulin"><font size="15">Seleccione una insulina</font></string>
+    <string name="must_select_insulin">Debe seleccionar una insulina.</string>
+    <string name="must_enter_units">Debe indicar la cantidad de unidades aplicadas.</string>
+    <string name="time_applied">Fecha/Hora aplicación: </string>
+    <string name="yyyy">aaaa</string>
+    <string name="mm">mm</string>
+    <string name="dd">dd</string>
+    <string name="now">Ahora</string>
+    <string name="hh">hh</string>
+    <string name="MM">MM</string>
+    <string name="insulin_applied_data">Datos de la dosis aplicada</string>
+    <string name="must_enter_valid_day">Debe ingresar un día válido.</string>
+    <string name="must_enter_valid_month">Debe ingresar un mes válido.</string>
+    <string name="must_enter_valid_year">Debe ingresar un año válido.</string>
+    <string name="must_enter_valid_hour">Debe ingresar una hora válida.</string>
+    <string name="must_enter_valid_minute">Debe ingresar unos minutos válido.</string>
+    <string name="must_enter_valid_date">Debe ingresar una fecha y hora válida. No puede ingresar una fecha a futuro ni de más de 24 horas pasadas.</string>
+    <string name="duration_separator"> / </string>
+    <string name="remain">Quedan: </string>
+    <string name="IU">UI</string>
+    <string name="app_insulins">Insulinas aplicadas</string>
+    <string name="no_insulin_msg">No hay insulinas registradas en la aplicación.\nIngréselas en \'Configuración\' y vuelva a intentarlo.</string>
+    <string name="hour">"Hora: "</string>
+    <string name="insulin_title">Insulina</string>
+    <string name="cant_delete_in_use_insulin">No puede eliminar una Insulina en uso.</string>
+    <string name="total">TOTAL</string>
+
+</resources>

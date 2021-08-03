@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsulinaBuscarActivity"
+    android:layout_margin="5dp"
+    android:background="@drawable/borde_color_fondo_oscuro"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LinearLayoutNombrePantalla">
+
+
+        <TextView
+            style="@style/TextViewNombrePantalla"
+            android:text="@string/search_insulin"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/insulina_contraste"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/LinearLayoutSeccion">
+
+                <TextView
+                    style="@style/TextViewTitulo"
+                    android:text="@string/search_criterial" />
+
+
+                <EditText
+                    style="@style/EditTextIngresoDatos"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="@string/enter_insulin_name"
+                    android:imeOptions="actionDone"
+                    android:selectAllOnFocus="true"
+                    android:maxLines="1"
+                    android:digits="abcdefghijklmnñopqrstuvwxyz ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                    android:id="@+id/nombreBuscarET" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/estiloBotonPequeño"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:background="@drawable/borde_color_fino"
+                        android:layout_marginRight="10dp"
+                        android:onClick="clickLimpiar"
+                        android:text="@string/clean"
+                        android:textColor="@color/purple_700"
+                        android:id="@+id/limpiarBT"/>
+
+
+                    <TextView
+                        style="@style/estiloBotonPequeño"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:background="@drawable/borde_color_fino"
+                        android:onClick="clickBuscarInsulinas"
+                        android:text="@string/search"
+                        android:textColor="@color/purple_700"
+                        android:id="@+id/buscarBT"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/borde_color_fino"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/borde_color_fino">
+
+                <ListView
+                    style="@style/ListViewGeneral"
+                    android:id="@+id/insulinaListaLV"/>
+
+                <TextView
+                    style="@style/TextViewIngresoDatos"
+                    android:padding="10dp"
+                    android:layout_marginBottom="200dp"
+                    android:id="@+id/view_vacio"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABDerecha"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickAgregar"
+            android:id="@+id/AddFAB"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABIzquierda"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickVolver"
+            android:id="@+id/cancelFAB"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
