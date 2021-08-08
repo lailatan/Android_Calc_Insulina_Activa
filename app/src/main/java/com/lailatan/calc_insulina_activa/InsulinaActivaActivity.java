@@ -194,6 +194,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
             InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(this);
             insulinaActivaId = insulinaActivaHelper.guardarInsulinaActiva(insulinaActivaActual);
             insulinaActivaHelper.close();
+            if(Utils.cargarConfigRecibirNotificaciones(this))
+                Utils.crearAlarmaInsulinaActiva(this,insulinaActivaActual);
             guardado=true;
         }
         return guardado;
@@ -271,7 +273,10 @@ public class InsulinaActivaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
                 InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaActivity.this);
-                if (!(insulinaActivaId==0)) insulinaActivaHelper.eliminarInsulinaActiva(insulinaActivaId);
+                if (!(insulinaActivaId==0)) {
+                    insulinaActivaHelper.eliminarInsulinaActiva(insulinaActivaId);
+                    Utils.borrarAlarmaInsulinaActiva(InsulinaActivaActivity.this,insulinaActivaId);
+                }
                 onBackPressed();
             }
         });

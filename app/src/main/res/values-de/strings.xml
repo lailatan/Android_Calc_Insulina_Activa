@@ -72,5 +72,13 @@
     <string name="insulin_title">Insulin</string>
     <string name="cant_delete_in_use_insulin">Sie können kein Insulin in Gebrauch löschen.</string>
     <string name="total">GESAMT</string>
+    <string name="receive_notifications">Benachrichtigungen erhalten</string>
+    <string name="must_have_notificaion_permissions">Sie müssen Benachrichtigungen für diese App zulassen. Bitte ändern Sie diese Einstellung in den Geräteeinstellungen und versuchen Sie es erneut.</string>
+    <string name="active_insulin_expired">aktives Insulin beendet</string>
+    <string name="notif_created">Benachrichtigung erstellt</string>
+    <string name="create_notif_confirmation">Möchten Sie Benachrichtigungen für bereits eingegebene aktive Insuline erstellen?</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="notif_from_now">Ab jetzt werden Benachrichtigungen erstellt.</string>
+    <string name="active_insulin_expired_info">Informationen zum gerade beendeten Insulinauftrag:</string>
 
 </resources>

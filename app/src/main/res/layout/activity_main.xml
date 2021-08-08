@@ -62,6 +62,7 @@
             android:onClick="clickCalcularInsuActiva"
             android:text="@string/calc" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -70,6 +71,7 @@
         android:padding="10dp"
         android:orientation="vertical">
     </LinearLayout>
+
     <LinearLayout
         android:background="@drawable/borde_main__botones"
         android:layout_width="match_parent"
@@ -97,6 +99,23 @@
             android:textColor="@color/purple_200"
             android:onClick="clickConfiguracion"
             android:text="@string/config" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <CheckBox
+            style="@style/EditTextIngresoDatos"
+            android:textColor="@color/white"
+            android:text="@string/receive_notifications"
+            android:checked="false"
+            android:onClick="clickRecibirNotificaciones"
+            android:id="@+id/notificacionesCB"/>
+
     </LinearLayout>
 
 

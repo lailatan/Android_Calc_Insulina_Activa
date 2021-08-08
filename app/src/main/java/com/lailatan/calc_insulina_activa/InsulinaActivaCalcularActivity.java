@@ -98,10 +98,10 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
 
     //Botones
     public void clickLimpiar(View view) {
-        BorrarInsuActivayCotroles();
+        BorrarInsuActivayControles();
     }
 
-    private void BorrarInsuActivayCotroles() {
+    private void BorrarInsuActivayControles() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         alertDialog.setMessage(R.string.delete_all_active_insulin_confirmation);
         alertDialog.setTitle(R.string.delete);
@@ -120,6 +120,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
                 InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaCalcularActivity.this);
                 insuActivaHelper.eliminarTodasInsulinaActiva();
                 insuActivaHelper.close();
+                Utils.borrarTodasAlarmasInsulinaActiva(InsulinaActivaCalcularActivity.this);
             }
         });
         alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()

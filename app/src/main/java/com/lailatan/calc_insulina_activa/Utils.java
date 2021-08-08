@@ -2,20 +2,48 @@ package com.lailatan.calc_insulina_activa;
 
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
+import com.lailatan.calc_insulina_activa.db.InsulinaSQLiteHelper;
+import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
+import com.lailatan.calc_insulina_activa.notifications.AlarmBroadcast;
 
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class Utils {
+    public static final String C_INSULINA = "insulina";
+    public static final String C_DURACION = "duracion";
+    public static final String C_HORAINICIO = "hora";
+    public static final String C_UNIDADES = "unidades";
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -59,11 +87,8 @@ public class Utils {
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
         //char separadorDecimal= decimalFormatSymbols.getDecimalSeparator();
         char separadorDecimal= ".".charAt(0);
-
         try{
-
             double retorno = 0.0;
-
             //Valido que el valor no este en blanco
             if (valor == null || valor.trim().length() == 0)
                 throw new UtilException ("Debe indicar el valor");
@@ -146,4 +171,109 @@ public class Utils {
         }
     }
 
+    //guardar configuración aplicación Android usando SharedPreferences
+    public static void guardarConfigRecibirNotificaciones(Context contexto, Boolean recibirNotificaciones) {
+        SharedPreferences prefs = contexto.getSharedPreferences(contexto.getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("Notifications", recibirNotificaciones);
+        editor.commit();
+    }
+
+    //cargar configuración aplicación Android usando SharedPreferences
+    public static Boolean cargarConfigRecibirNotificaciones(Context contexto) {
+        SharedPreferences prefs = contexto.getSharedPreferences(contexto.getString(R.string.app_name), Context.MODE_PRIVATE);
+        return prefs.getBoolean("Notifications", false);
+    }
+
+    public static boolean tienePermisoParaNotificaciones(Context contexto) {
+        NotificationManagerCompat manager = NotificationManagerCompat.from(contexto);
+        // La validez del método areNotificationsEnabled solo se admite oficialmente hasta la API mínima 19,
+        // y este método aún se puede llamar si es menor que 19, pero solo devolverá verdadero, es decir,
+        // el usuario ha habilitado las notificaciones de forma predeterminada.
+        boolean isOpened = manager.areNotificationsEnabled();
+        if (!isOpened) Toast.makeText(contexto, contexto.getString(R.string.must_have_notificaion_permissions), Toast.LENGTH_LONG).show();
+        return isOpened;
+    }
+
+    public  static String createNotificationChannel (Context contexto) {
+        String channelId = "${contexto.packageName} - ${contexto.getString(R.string.app_name)}";
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+            int importancia = NotificationManager.IMPORTANCE_HIGH;
+            //int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            String nombre=contexto.getString(R.string.app_name) + "Channel";
+            String descripcion="Notification Channel for " + contexto.getString(R.string.app_name);
+            NotificationChannel channel = new NotificationChannel(channelId, nombre, importancia);
+            channel.setDescription(descripcion);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = contexto.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+        return channelId;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void crearAlarmaInsulinaActiva(Context context, InsulinaActiva insulinaActiva){
+        Intent intent = new Intent(context, AlarmBroadcast.class);
+        intent.putExtra(C_INSULINA, insulinaActiva.getInsulina().getNombre());
+        intent.putExtra(C_DURACION, insulinaActiva.getInsulina().getDuracion_minutos().toString());
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime fechaHoraAplicacion = insulinaActiva.getFechaDesde();
+        intent.putExtra(C_HORAINICIO, fechaHoraAplicacion.format(dateTimeFormat));
+        intent.putExtra(C_UNIDADES, insulinaActiva.getUnidades().toString());
+        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context, insulinaActiva.getInsulina_activa_id(), intent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        /*
+        long ahora=System.currentTimeMillis();
+        long diezSegundosEnMillis = 1000*10;
+        */
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, ahora+diezSegundosEnMillis, pendingIntent);
+
+        LocalDateTime fechaHoraAlarma = insulinaActiva.getFechaDesde().plusMinutes(insulinaActiva.getInsulina().getDuracion_minutos());
+        Long timestamp = fechaHoraAlarma.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+        /*
+        Calendar datetimeToAlarm = Calendar.getInstance(Locale.getDefault());
+        //datetimeToAlarm.timeInMillis = System.currentTimeMillis ()
+        datetimeToAlarm.set(Calendar.DAY_OF_MONTH, fechaHoraAlarma.getDayOfMonth());
+        datetimeToAlarm.set(Calendar.MONTH, fechaHoraAlarma.getMonthValue());
+        datetimeToAlarm.set(Calendar.YEAR, fechaHoraAlarma.getYear());
+        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, fechaHoraAlarma.getHour());
+        datetimeToAlarm.set(Calendar.MINUTE, fechaHoraAlarma.getMinute());
+        datetimeToAlarm.set(Calendar.SECOND, 0);
+        datetimeToAlarm.set(Calendar.MILLISECOND, 0);
+        Long timestamp2 = datetimeToAlarm.getTimeInMillis();
+         */
+        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp, pendingIntent);
+        Toast.makeText(context, context.getString(R.string.notif_created),Toast.LENGTH_LONG).show();
+    }
+
+    public static void borrarAlarmaInsulinaActiva(Context context, Integer insulinaActivaId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarmManager!= null) {
+            //alarmManager..cancel();
+        }
+    }
+
+    public static void borrarTodasAlarmasInsulinaActiva(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        if (alarmManager!= null) {
+            //alarmManager..cancel();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void crearAlarmasTodasInsulinasActivas(Context context) {
+        InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(context);
+        List<InsulinaActiva> listaDeInsulinaActivas = insulinaActivaHelper.buscarInsulinaActivas();
+        for (InsulinaActiva insuActiva: listaDeInsulinaActivas) {
+            if (insuActiva.getActiva()==1) {
+                if (insuActiva.calcularTiempoQueRestaActivayDesactivar(context) > 0) {
+                    crearAlarmaInsulinaActiva(context,insuActiva);
+                }
+            }
+        }
+        insulinaActivaHelper.close();
+    }
 }
