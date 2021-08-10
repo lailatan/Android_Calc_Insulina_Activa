@@ -78,7 +78,10 @@
     <string name="notif_created">Benachrichtigung erstellt</string>
     <string name="create_notif_confirmation">Möchten Sie Benachrichtigungen für bereits eingegebene aktive Insuline erstellen?</string>
     <string name="notifications">Benachrichtigungen</string>
+    <string name="notif_all_active_insulin_created">Für aktive Insuline wurden Benachrichtigungen erstellt.</string>
     <string name="notif_from_now">Ab jetzt werden Benachrichtigungen erstellt.</string>
     <string name="active_insulin_expired_info">Informationen zum gerade beendeten Insulinauftrag:</string>
+    <string name="notif_not_found">Es wurde keine ausstehende Benachrichtigung gefunden.</string>
+    <string name="notif_all_active_insulin_deleted">Ausstehende Benachrichtigungen wurden entfernt.</string>
 
 </resources>

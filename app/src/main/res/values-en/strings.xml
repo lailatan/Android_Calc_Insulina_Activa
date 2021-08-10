@@ -78,7 +78,10 @@
     <string name="notif_created">Notification created</string>
     <string name="create_notif_confirmation">Do you want to create notifications for active insulins already entered?</string>
     <string name="notifications">Notifications</string>
+    <string name="notif_all_active_insulin_created">Notifications were created for active insulins.</string>
     <string name="notif_from_now">Notifications will be created from now on.</string>
     <string name="active_insulin_expired_info">Insulin applied information just ended:</string>
+    <string name="notif_not_found">No pending notification was found.</string>
+    <string name="notif_all_active_insulin_deleted">Pending notifications were removed.</string>
 
 </resources>

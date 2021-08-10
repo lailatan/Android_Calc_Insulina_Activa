@@ -46,7 +46,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public ArrayList<InsulinaActiva> buscarInsulinaActivas() {
+    public ArrayList<InsulinaActiva> buscarInsulinaActivas(boolean soloActivas) {
         ArrayList<InsulinaActiva> insulinaActivas = new ArrayList<>();
         InsulinaSQLiteHelper insulinaHelper = new InsulinaSQLiteHelper(contexto);
         SQLiteDatabase db = getReadableDatabase();
@@ -64,10 +64,12 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
                 COLUMNA_DESCRIPCION
         };
 
-        String orderby = InsulinaContract.InsulinaEntry._ID + " DESC";
+            String whereClause = soloActivas?COLUMNA_ACTIVA + "=?":null;
+            String whereArgs[] =  soloActivas? new String[]{"1"} :null;
+            String orderby = InsulinaContract.InsulinaEntry._ID + " DESC";
 
         Cursor cursor = db.query(NOMBRE_TABLA,
-                columnas,null, null, null, null, orderby);
+                columnas,whereClause, whereArgs, null, null, orderby);
         try {
             int columnaIdIndex = cursor.getColumnIndex(_ID);
             int columnaInsulinaIdIndex = cursor.getColumnIndex(COLUMNA_INSULINA_ID);

@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -193,9 +194,11 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
             InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(this);
             insulinaActivaId = insulinaActivaHelper.guardarInsulinaActiva(insulinaActivaActual);
+            insulinaActivaActual.setInsulina_activa_id(insulinaActivaId);
             insulinaActivaHelper.close();
             if(Utils.cargarConfigRecibirNotificaciones(this))
-                Utils.crearAlarmaInsulinaActiva(this,insulinaActivaActual);
+                Utils.crearAlarmaInsulinaActiva(getApplicationContext(),insulinaActivaActual);
+                Toast.makeText(this, this.getString(R.string.notif_created),Toast.LENGTH_LONG).show();
             guardado=true;
         }
         return guardado;
@@ -275,15 +278,15 @@ public class InsulinaActivaActivity extends AppCompatActivity {
                 InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaActivity.this);
                 if (!(insulinaActivaId==0)) {
                     insulinaActivaHelper.eliminarInsulinaActiva(insulinaActivaId);
-                    Utils.borrarAlarmaInsulinaActiva(InsulinaActivaActivity.this,insulinaActivaId);
+                    if(Utils.cargarConfigRecibirNotificaciones(InsulinaActivaActivity.this))
+                        Utils.borrarAlarmaInsulinaActiva(getApplicationContext(),insulinaActivaId);
                 }
                 onBackPressed();
             }
         });
         alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
         {
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lailatan.calc_insulina_activa">
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/insulina_ico"
@@ -32,6 +32,11 @@
             </intent-filter>
         </activity>
         <receiver android:name=".notifications.AlarmBroadcast"/>
+        <receiver android:name=".notifications.BootBroadcast" android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

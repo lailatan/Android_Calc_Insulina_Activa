@@ -182,6 +182,8 @@
 
                             <EditText
                                 style="@style/EditTextIngresoDatos"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:hint="00.00"
                                 android:layout_marginRight="5dp"
                                 android:inputType="numberDecimal"
@@ -213,6 +215,8 @@
                             <EditText
                                 style="@style/EditTextIngresoDatos"
                                 android:layout_width="wrap_content"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:layout_marginRight="5dp"
                                 android:hint="@string/dd"
                                 android:inputType="number"
@@ -229,6 +233,8 @@
                             <EditText
                                 style="@style/EditTextIngresoDatos"
                                 android:layout_width="wrap_content"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:layout_marginRight="5dp"
                                 android:hint="@string/MM"
                                 android:inputType="number"
@@ -245,6 +251,8 @@
                             <EditText
                                 style="@style/EditTextIngresoDatos"
                                 android:layout_width="wrap_content"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:layout_marginRight="5dp"
                                 android:hint="@string/yyyy"
                                 android:inputType="number"
@@ -255,6 +263,8 @@
                             <EditText
                                 style="@style/EditTextIngresoDatos"
                                 android:layout_width="wrap_content"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:layout_marginRight="5dp"
                                 android:hint="@string/hh"
                                 android:inputType="number"
@@ -271,6 +281,8 @@
                             <EditText
                                 style="@style/EditTextIngresoDatos"
                                 android:layout_width="wrap_content"
+                                android:selectAllOnFocus="true"
+                                android:imeOptions="actionNext"
                                 android:layout_marginRight="5dp"
                                 android:hint="@string/mm"
                                 android:inputType="number"

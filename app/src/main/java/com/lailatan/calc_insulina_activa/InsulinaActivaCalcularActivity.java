@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -72,7 +73,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     private void CargarInsulinasActivas() {
 
         InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
-        listaDeInsulinaActivas = insuActivaHelper.buscarInsulinaActivas();
+        listaDeInsulinaActivas = insuActivaHelper.buscarInsulinaActivas(false);
         insuActivaHelper.close();
 
         insuActivaAdapter = new InsulinaActivaAdapter(this, listaDeInsulinaActivas);
@@ -116,11 +117,12 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
                 insulinaLentaTotalTV.setText("");
                 insulinaRapidaTotalTV.setText("");
                 insulinaActivaLV.setAdapter(null);
-                listaDeInsulinaActivas.clear();
                 InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaCalcularActivity.this);
                 insuActivaHelper.eliminarTodasInsulinaActiva();
                 insuActivaHelper.close();
-                Utils.borrarTodasAlarmasInsulinaActiva(InsulinaActivaCalcularActivity.this);
+                if(Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
+                    Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(),listaDeInsulinaActivas);
+                listaDeInsulinaActivas.clear();
             }
         });
         alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()

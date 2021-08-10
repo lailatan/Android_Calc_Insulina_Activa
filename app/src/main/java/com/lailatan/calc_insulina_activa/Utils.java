@@ -6,12 +6,15 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.db.InsulinaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
 import com.lailatan.calc_insulina_activa.notifications.AlarmBroadcast;
+import com.lailatan.calc_insulina_activa.notifications.BootBroadcast;
 
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -32,6 +36,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -39,10 +44,8 @@ import java.util.Locale;
 import static android.content.Context.ALARM_SERVICE;
 
 public class Utils {
-    public static final String C_INSULINA = "insulina";
-    public static final String C_DURACION = "duracion";
-    public static final String C_HORAINICIO = "hora";
-    public static final String C_UNIDADES = "unidades";
+    public static final String C_TEXTO = "texto";
+    public static final String C_ID_MENSAJE = "id_mensaje";
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -212,68 +215,121 @@ public class Utils {
         return channelId;
     }
 
+
+    public static NotificationCompat.Builder crearNotificacion(Context context,String texto){
+        String channelId = "${context.packageName} - ${context.getString(R.string.app_name)}";
+        return new NotificationCompat.Builder( context, channelId)
+                .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
+                //.setSmallIcon(R.drawable.insulina_activa)
+                .setContentTitle (context.getString(R.string.active_insulin_expired))
+                //.setContentText ("mensaje")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(texto))
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                //.setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void crearAlarmaInsulinaActiva(Context context, InsulinaActiva insulinaActiva){
+        String texto = crearTextoAlarmaIsulinaActiva(context,insulinaActiva);
+        Integer idAlarma=insulinaActiva.getInsulina_activa_id();
         Intent intent = new Intent(context, AlarmBroadcast.class);
-        intent.putExtra(C_INSULINA, insulinaActiva.getInsulina().getNombre());
-        intent.putExtra(C_DURACION, insulinaActiva.getInsulina().getDuracion_minutos().toString());
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime fechaHoraAplicacion = insulinaActiva.getFechaDesde();
-        intent.putExtra(C_HORAINICIO, fechaHoraAplicacion.format(dateTimeFormat));
-        intent.putExtra(C_UNIDADES, insulinaActiva.getUnidades().toString());
-        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context, insulinaActiva.getInsulina_activa_id(), intent, PendingIntent.FLAG_ONE_SHOT);
+        intent.setData(Uri.parse("InsActiveAlarms://" + idAlarma.toString()));
+        intent.putExtra(C_TEXTO, texto);
+        intent.putExtra(C_ID_MENSAJE, idAlarma);
+        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context,idAlarma, intent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-
-        /*
-        long ahora=System.currentTimeMillis();
-        long diezSegundosEnMillis = 1000*10;
-        */
-        //alarmManager.set(AlarmManager.RTC_WAKEUP, ahora+diezSegundosEnMillis, pendingIntent);
 
         LocalDateTime fechaHoraAlarma = insulinaActiva.getFechaDesde().plusMinutes(insulinaActiva.getInsulina().getDuracion_minutos());
         Long timestamp = fechaHoraAlarma.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-        /*
-        Calendar datetimeToAlarm = Calendar.getInstance(Locale.getDefault());
-        //datetimeToAlarm.timeInMillis = System.currentTimeMillis ()
-        datetimeToAlarm.set(Calendar.DAY_OF_MONTH, fechaHoraAlarma.getDayOfMonth());
-        datetimeToAlarm.set(Calendar.MONTH, fechaHoraAlarma.getMonthValue());
-        datetimeToAlarm.set(Calendar.YEAR, fechaHoraAlarma.getYear());
-        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, fechaHoraAlarma.getHour());
-        datetimeToAlarm.set(Calendar.MINUTE, fechaHoraAlarma.getMinute());
-        datetimeToAlarm.set(Calendar.SECOND, 0);
-        datetimeToAlarm.set(Calendar.MILLISECOND, 0);
-        Long timestamp2 = datetimeToAlarm.getTimeInMillis();
-         */
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timestamp, pendingIntent);
-        Toast.makeText(context, context.getString(R.string.notif_created),Toast.LENGTH_LONG).show();
+        Log.i("Utils", "Crear alarma");
+        Log.i("AlarmBroadcast", texto);
+        Log.i("AlarmBroadcast", idAlarma.toString());
+        Log.i("AlarmBroadcast", timestamp.toString());
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, timestamp, pendingIntent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static String crearTextoAlarmaIsulinaActiva(Context context, InsulinaActiva insulinaActiva) {
+        String duracionTxt;
+        Integer duracion = insulinaActiva.getInsulina().getDuracion_minutos();
+        if (duracion > 180) {            double valorhoras = Math.round((duracion / 60.0) * 100.0) / 100.0; //solo 2 decimales
+            duracionTxt = valorhoras +  context.getString(R.string.hours_short);
+        } else {
+            duracionTxt =  duracion.toString() +  context.getString(R.string.minutes_short);
+        }
+
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        String texto = "\t" + context.getString(R.string.insulin) + " " + insulinaActiva.getInsulina().getNombre() + "\n" +
+                "\t" + context.getString(R.string.hour) + " " + insulinaActiva.getFechaDesde().format(dateTimeFormat) + "\n" +
+                "\t" + context.getString(R.string.units) + " " + insulinaActiva.getUnidades().toString() + context.getString(R.string.IU) + "\n" +
+                "\t" + context.getString(R.string.duration) + " " + duracionTxt + "\n";
+        return texto;
     }
 
     public static void borrarAlarmaInsulinaActiva(Context context, Integer insulinaActivaId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         if (alarmManager!= null) {
-            //alarmManager..cancel();
+            try {
+                Intent intent = new Intent(context, AlarmBroadcast.class);
+                intent.putExtra(C_ID_MENSAJE, insulinaActivaId);
+                intent.setData(Uri.parse("InsActiveAlarms://" + insulinaActivaId.toString()));
+                PendingIntent sender = PendingIntent.getBroadcast(context, insulinaActivaId, intent, PendingIntent.FLAG_ONE_SHOT);
+                //FLAG_CANCEL_CURRENT???
+                alarmManager.cancel(sender);
+                Log.i("Utils", "Borrar alarma");
+                Log.i("AlarmBroadcast", insulinaActivaId.toString());
+            } catch (Exception e) {
+                Log.i("Utils", "Borrar alarma");
+                Log.i("AlarmBroadcast", "ERROR BORRANDO ALARMA");
+                Toast.makeText(context, context.getString(R.string.notif_not_found), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    public static void borrarTodasAlarmasInsulinaActiva(Context context) {
+    public static void borrarTodasAlarmasInsulinaActiva(Context context, ArrayList<InsulinaActiva> listaDeInsulinaActivas) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         if (alarmManager!= null) {
-            //alarmManager..cancel();
+            if (listaDeInsulinaActivas.size()!=0)
+                for (InsulinaActiva insuActiva:listaDeInsulinaActivas) {
+                    if (insuActiva.getActiva() == 1)
+                        borrarAlarmaInsulinaActiva(context,insuActiva.getInsulina_activa_id());
+                }
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void crearAlarmasTodasInsulinasActivas(Context context) {
-        InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(context);
-        List<InsulinaActiva> listaDeInsulinaActivas = insulinaActivaHelper.buscarInsulinaActivas();
-        for (InsulinaActiva insuActiva: listaDeInsulinaActivas) {
-            if (insuActiva.getActiva()==1) {
-                if (insuActiva.calcularTiempoQueRestaActivayDesactivar(context) > 0) {
-                    crearAlarmaInsulinaActiva(context,insuActiva);
+    public static void crearAlarmasTodasInsulinasActivas(Context context,ArrayList<InsulinaActiva> listaDeInsulinaActivas) {
+        if (listaDeInsulinaActivas.size()!=0) {
+            for (InsulinaActiva insuActiva : listaDeInsulinaActivas) {
+                if (insuActiva.getActiva() == 1) {
+                    if (insuActiva.calcularTiempoQueRestaActivayDesactivar(context) > 0) {
+                        crearAlarmaInsulinaActiva(context, insuActiva);
+                    }
                 }
             }
         }
-        insulinaActivaHelper.close();
     }
+
+    public static void habilitarAlarmasEnBoot(Context context){
+        ComponentName receiver = new ComponentName(context, BootBroadcast.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);    }
+
+    public static void desHabilitarAlarmasEnBoot(Context context){
+        ComponentName receiver = new ComponentName(context, BootBroadcast.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
 }
