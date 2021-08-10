@@ -40,13 +40,13 @@ public class BootBroadcast extends BroadcastReceiver {
                     insuActivaHelper.close();
                     if (listaDeInsulinaActivas.size() != 0) {
                         Utils.crearAlarmasTodasInsulinasActivas(context, listaDeInsulinaActivas);
-                        Toast.makeText(context, "BootBroadcast " + listaDeInsulinaActivas.size() + " alarmas creadas", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, "BootBroadcast " + listaDeInsulinaActivas.size() + " alarmas creadas", Toast.LENGTH_LONG).show();
                         Log.i("BootBroadcast", "Crear notificacion");
                     }
                 }
             }
-            Log.i("BootBroadcast", "contexto " + context.toString());
+            //Log.i("BootBroadcast", "contexto " + context.toString());
         }
-        Toast.makeText(context,  "BootBroadcast saliendo", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context,  "BootBroadcast saliendo", Toast.LENGTH_LONG).show();
     }
 }

@@ -8,11 +8,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
@@ -22,6 +25,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class InsulinaActivaCalcularActivity extends AppCompatActivity {
+    public static final long PERIODO = 60000; // 60 segundos (60 * 1000 millisegundos) // 5 minutos 60000 * 5 = 300000
+    private Handler handler;
+    private Runnable runnable;
     private static final String C_INSULINA_ACTIVA = "insulina_activa";
     InsulinaActivaAdapter insuActivaAdapter;
     ArrayList<InsulinaActiva> listaDeInsulinaActivas;
@@ -45,7 +51,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         insulinaLentaTotalTV=findViewById(R.id.insulinaLentaTotalTV);
         vacioTV=findViewById(R.id.vacioTV);
 
-        CalcularInsulinaActiva();
+        //CalcularInsulinaActiva();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -156,6 +162,23 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         CalcularInsulinaActiva();
+
+        handler = new Handler(Looper.getMainLooper());
+        runnable = new Runnable(){
+            @Override
+            public void run(){
+                //Toast.makeText(InsulinaActivaCalcularActivity.this,  "onResume", Toast.LENGTH_SHORT).show();
+                CalcularInsulinaActiva();
+                handler.postDelayed(this, PERIODO);
+            }
+        };
+        handler.postDelayed(runnable, PERIODO);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Toast.makeText(this,  "onPause", Toast.LENGTH_SHORT).show();
+        handler.removeCallbacks(runnable);
+    }
 }
