@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -43,15 +45,17 @@ public class MainActivity extends AppCompatActivity {
             if (Utils.tienePermisoParaNotificaciones(this)) {
                 notificacionesCB.setChecked(true);
                 Utils.createNotificationChannel(this);
-                //Utils.createNotificationChannel(this,
-                //        NotificationManagerCompat.IMPORTANCE_HIGH, false,
-                //        getString(R.string.app_name), "Canal de notificación de aplicaciones");
-                //Utils.crearNotificacion(this, null);
+                Utils.habilitarAlarmasEnBoot(getApplicationContext());
+                //Utils.crearNotificacion(this, "PRUEBA");
             }else{
+                Utils.desHabilitarAlarmasEnBoot(getApplicationContext());
                 Utils.guardarConfigRecibirNotificaciones(this,false);
                 notificacionesCB.setChecked(false);
             }
-        } else notificacionesCB.setChecked(false);
+        } else {
+            Utils.desHabilitarAlarmasEnBoot(getApplicationContext());
+            notificacionesCB.setChecked(false);
+        }
     }
 
     public void clickRecibirNotificaciones(View view) {

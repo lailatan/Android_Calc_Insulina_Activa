@@ -22,7 +22,8 @@ public class AlarmBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String channelId = "${context.packageName} - ${context.getString(R.string.app_name)}";
+        //String channelId = "${context.packageName} - ${context.getString(R.string.app_name)}";
+        String channelId = context.getString(R.string.app_name);
 
         Bundle datos =intent.getExtras();
         String texto=datos.getString(C_TEXTO);
@@ -34,7 +35,8 @@ public class AlarmBroadcast extends BroadcastReceiver {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intentProximo);
         // Get the PendingIntent containing the entire back stack
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
+        //PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLA.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
 
         //intentProximo.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentProximo, 0);

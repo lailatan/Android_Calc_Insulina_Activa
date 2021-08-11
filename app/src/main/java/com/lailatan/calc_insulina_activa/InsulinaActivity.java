@@ -92,20 +92,33 @@ public class InsulinaActivity extends AppCompatActivity {
 
     private Boolean guardarInsulina() {
         Boolean guardado=false;
+        if (insulinaEnUso()) {
+            Toast.makeText(getApplicationContext(), R.string.cant_modif_in_use_insulin,Toast.LENGTH_LONG).show();
+        } else {
+            if (datosValidos()) {
+                String nombre = nombreET.getText().toString();
+                String laboratorio = laboET.getText().toString();
+                String descripcion = descripcionET.getText().toString();
+                Integer rapida = rapidaCB.isChecked() ? 1 : 0;
 
-        if (datosValidos()) {
-            String nombre = nombreET.getText().toString();
-            String laboratorio = laboET.getText().toString();
-            String descripcion = descripcionET.getText().toString();
-            Integer rapida = rapidaCB.isChecked()?1:0;
-
-            Integer duracion = Integer.parseInt(duracionMinET.getText().toString());
-            InsulinaSQLiteHelper insulinaHelper = new InsulinaSQLiteHelper(this);
-            insulinaId = insulinaHelper.guardarInsulina(new Insulina(insulinaId,nombre,laboratorio,rapida,duracion,descripcion));
-            insulinaHelper.close();
-            guardado=true;
+                Integer duracion = Integer.parseInt(duracionMinET.getText().toString());
+                InsulinaSQLiteHelper insulinaHelper = new InsulinaSQLiteHelper(this);
+                insulinaId = insulinaHelper.guardarInsulina(new Insulina(insulinaId, nombre, laboratorio, rapida, duracion, descripcion));
+                insulinaHelper.close();
+                guardado = true;
+            }
         }
         return guardado;
+    }
+
+    private boolean insulinaEnUso() {
+        boolean enUso=false;
+        if (!(insulinaId==0)) {
+            InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivity.this);
+            enUso = insulinaActivaHelper.insulinaEstaUsadaComoActivaPorId(insulinaId);
+            insulinaActivaHelper.close();
+        }
+        return enUso;
     }
 
     private boolean datosValidos() {
@@ -157,16 +170,12 @@ public class InsulinaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
                 if (!(insulinaId==0)) {
-                    InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivity.this);
-                    if (!insulinaActivaHelper.insulinaEstaUsadaComoActivaPorId(insulinaId)){
+                    if (!insulinaEnUso()) {
                         InsulinaSQLiteHelper insulinaHelper = new InsulinaSQLiteHelper(InsulinaActivity.this);
                         insulinaHelper.eliminarInsulina(insulinaId);
                         insulinaHelper.close();
                         onBackPressed();
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(), R.string.cant_delete_in_use_insulin, Toast.LENGTH_LONG).show();
-                    insulinaActivaHelper.close();
+                    } else Toast.makeText(getApplicationContext(), R.string.cant_delete_in_use_insulin, Toast.LENGTH_LONG).show();
                 }
             }
         });

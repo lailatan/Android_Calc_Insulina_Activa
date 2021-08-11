@@ -71,11 +71,13 @@
     <string name="hour">"Time: "</string>
     <string name="insulin_title">Insulin</string>
     <string name="cant_delete_in_use_insulin">You cannot delete an Insulin in use.</string>
+    <string name="cant_modif_in_use_insulin">You cannot modify an Insulin in use.</string>
     <string name="total">TOTAL</string>
     <string name="receive_notifications">Receive Notifications</string>
     <string name="must_have_notificaion_permissions">Sie müssen Benachrichtigungen für diese App zulassen. Bitte ändern Sie diese Einstellung in den Geräteeinstellungen und versuchen Sie es erneut.</string>
     <string name="active_insulin_expired">Active Insulin erminated</string>
     <string name="notif_created">Notification created</string>
+    <string name="notif_modified">Notification changed</string>
     <string name="create_notif_confirmation">Do you want to create notifications for active insulins already entered?</string>
     <string name="notifications">Notifications</string>
     <string name="notif_all_active_insulin_created">Notifications were created for active insulins.</string>

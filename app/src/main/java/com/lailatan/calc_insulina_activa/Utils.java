@@ -199,7 +199,8 @@ public class Utils {
     }
 
     public  static String createNotificationChannel (Context contexto) {
-        String channelId = "${contexto.packageName} - ${contexto.getString(R.string.app_name)}";
+        //String channelId = "${contexto.packageName} - ${contexto.getString(R.string.app_name)}";
+        String channelId = contexto.getString(R.string.app_name);
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
             int importancia = NotificationManager.IMPORTANCE_HIGH;
             //int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -216,10 +217,10 @@ public class Utils {
     }
 
 
-    public static NotificationCompat.Builder crearNotificacion(Context context,String texto){
-        String channelId = "${context.packageName} - ${context.getString(R.string.app_name)}";
-        return new NotificationCompat.Builder( context, channelId)
-                .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
+    public static void crearNotificacion(Context context,String texto){
+        String channelId = context.getString(R.string.app_name);
+        NotificationCompat.Builder mbuilder= new NotificationCompat.Builder( context, channelId);
+        mbuilder.setSmallIcon(android.R.drawable.ic_menu_my_calendar)
                 //.setSmallIcon(R.drawable.insulina_activa)
                 .setContentTitle (context.getString(R.string.active_insulin_expired))
                 //.setContentText ("mensaje")
@@ -228,6 +229,8 @@ public class Utils {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 //.setContentIntent(pendingIntent)
                 .setAutoCancel(true);
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(context);
+        mNotificationManager.notify(1, mbuilder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -238,7 +241,8 @@ public class Utils {
         intent.setData(Uri.parse("InsActiveAlarms://" + idAlarma.toString()));
         intent.putExtra(C_TEXTO, texto);
         intent.putExtra(C_ID_MENSAJE, idAlarma);
-        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context,idAlarma, intent, PendingIntent.FLAG_ONE_SHOT);
+        //PendingIntent  pendingIntent = PendingIntent.getBroadcast(context,idAlarma, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent  pendingIntent = PendingIntent.getBroadcast(context,idAlarma, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
         LocalDateTime fechaHoraAlarma = insulinaActiva.getFechaDesde().plusMinutes(insulinaActiva.getInsulina().getDuracion_minutos());
@@ -278,7 +282,7 @@ public class Utils {
                 Intent intent = new Intent(context, AlarmBroadcast.class);
                 intent.putExtra(C_ID_MENSAJE, insulinaActivaId);
                 intent.setData(Uri.parse("InsActiveAlarms://" + insulinaActivaId.toString()));
-                PendingIntent sender = PendingIntent.getBroadcast(context, insulinaActivaId, intent, PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent sender = PendingIntent.getBroadcast(context, insulinaActivaId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 //FLAG_CANCEL_CURRENT???
                 alarmManager.cancel(sender);
                 Log.i("Utils", "Borrar alarma");

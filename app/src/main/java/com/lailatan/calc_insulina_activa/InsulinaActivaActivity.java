@@ -177,6 +177,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Boolean guardarInsulinaActiva() {
         Boolean guardado=false;
+        Boolean borrarAlarmaPrevia=true;
+        String textoConfirmacion;
         if (validoDatos()) {
             Double unidades = Double.valueOf(unidadesET.getText().toString());
             Integer dia = Integer.valueOf(diaET.getText().toString());
@@ -194,11 +196,19 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
             InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(this);
             insulinaActivaId = insulinaActivaHelper.guardarInsulinaActiva(insulinaActivaActual);
-            insulinaActivaActual.setInsulina_activa_id(insulinaActivaId);
             insulinaActivaHelper.close();
-            if(Utils.cargarConfigRecibirNotificaciones(this))
-                Utils.crearAlarmaInsulinaActiva(getApplicationContext(),insulinaActivaActual);
-                Toast.makeText(this, this.getString(R.string.notif_created),Toast.LENGTH_LONG).show();
+
+            if (insulinaActivaActual.getInsulina_activa_id()==0){
+                insulinaActivaActual.setInsulina_activa_id(insulinaActivaId);
+                borrarAlarmaPrevia=false;
+                textoConfirmacion=this.getString(R.string.notif_created);
+            } else textoConfirmacion=this.getString(R.string.notif_modified);
+
+            if(Utils.cargarConfigRecibirNotificaciones(this)) {
+                //if (borrarAlarmaPrevia)  Utils.borrarAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaId);
+                Utils.crearAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaActual);
+                Toast.makeText(this, textoConfirmacion, Toast.LENGTH_LONG).show();
+            }
             guardado=true;
         }
         return guardado;

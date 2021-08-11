@@ -71,11 +71,13 @@
     <string name="hour">"Hora: "</string>
     <string name="insulin_title">Insulina</string>
     <string name="cant_delete_in_use_insulin">No puede eliminar una Insulina en uso.</string>
+    <string name="cant_modif_in_use_insulin">No puede modificar una Insulina en uso.</string>
     <string name="total">TOTAL</string>
     <string name="receive_notifications">Recibir Notificaciones</string>
     <string name="must_have_notificaion_permissions">Debe permitir las notificaciones para esta aplicación. Cambie esta configuración en los ajustes del dispositivo y vuelva a intentarlo.</string>
     <string name="active_insulin_expired">Insulina Activa finalizada</string>
     <string name="notif_created">Notificación creada</string>
+    <string name="notif_modified">Notificación modificada</string>
     <string name="create_notif_confirmation">¿Desea crear notificaciones para las insulinas activas ya ingresadas?</string>
     <string name="notifications">Notificaciones</string>
     <string name="notif_all_active_insulin_created">Se crearon notificaciones para las insulinas activas.</string>

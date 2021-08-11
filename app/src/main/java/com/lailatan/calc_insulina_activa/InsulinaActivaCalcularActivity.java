@@ -173,6 +173,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, PERIODO);
+
     }
 
     @Override
@@ -181,4 +182,5 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         //Toast.makeText(this,  "onPause", Toast.LENGTH_SHORT).show();
         handler.removeCallbacks(runnable);
     }
+
 }
