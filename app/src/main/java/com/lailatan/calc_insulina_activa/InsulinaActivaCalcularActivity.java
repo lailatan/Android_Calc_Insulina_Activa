@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 
 public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     public static final long PERIODO = 60000; // 60 segundos (60 * 1000 millisegundos) // 5 minutos 60000 * 5 = 300000
+    private static final Integer C_TOPE_INACTIVAS = 10;
     private Handler handler;
     private Runnable runnable;
     private static final String C_INSULINA_ACTIVA = "insulina_activa";
@@ -51,15 +51,16 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         insulinaLentaTotalTV=findViewById(R.id.insulinaLentaTotalTV);
         vacioTV=findViewById(R.id.vacioTV);
 
-        //CalcularInsulinaActiva();
+        //calcularInsulinaActiva();
+        verificarCantidadInsulinasInactivas();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void CalcularInsulinaActiva() {
+    private void calcularInsulinaActiva() {
         Double insulinaTotalActiva = 0.00;
         Double insulinaRapidaTotalActiva = 0.00;
         Double insulinaLentaTotalActiva = 0.00;
-        CargarInsulinasActivas();
+        cargarInsulinasActivas();
         for (InsulinaActiva insuActiva: listaDeInsulinaActivas) {
             if (insuActiva.getActiva()==1) {
                 Double cantidadInsuActivaActual=insuActiva.calcularInsuActivaActual();
@@ -76,7 +77,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         insulinaLentaTotalTV.setText(String.valueOf(Math.round(insulinaLentaTotalActiva* 100.0) / 100.0));
     }
 
-    private void CargarInsulinasActivas() {
+    private void cargarInsulinasActivas() {
 
         InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
         listaDeInsulinaActivas = insuActivaHelper.buscarInsulinaActivas(false);
@@ -105,30 +106,47 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
 
     //Botones
     public void clickLimpiar(View view) {
-        BorrarInsuActivayControles();
+        borrarInsuActivayControles(false);
     }
 
-    private void BorrarInsuActivayControles() {
+    private void verificarCantidadInsulinasInactivas() {
+
+        InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
+        Integer cantidad = insuActivaHelper.buscarCantidadInsulinasActivas(false,true);
+        insuActivaHelper.close();
+        Log.i("InsulinaActivaCalcular","Insulinas inactivas --> " + cantidad.toString());
+        if (cantidad>C_TOPE_INACTIVAS)
+            borrarInsuActivayControles(true);
+    }
+
+    private void borrarInsuActivayControles(boolean soloInactivas) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-        alertDialog.setMessage(R.string.delete_all_active_insulin_confirmation);
+        String mensaje = getString(soloInactivas?R.string.delete_all_inactive_insulin_confirmation:R.string.delete_all_active_insulin_confirmation);
+        alertDialog.setMessage(mensaje);
         alertDialog.setTitle(R.string.delete);
         alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(DialogInterface dialog, int which)
             {
-                horaCalculoTV.setText("");
-                insulinaTotalTV.setText("");
-                insulinaLentaTotalTV.setText("");
-                insulinaRapidaTotalTV.setText("");
-                insulinaActivaLV.setAdapter(null);
                 InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaCalcularActivity.this);
-                insuActivaHelper.eliminarTodasInsulinaActiva();
+                if (soloInactivas) {
+                    insuActivaHelper.eliminarTodasInsulinInaActiva();
+                    calcularInsulinaActiva();
+                } else {
+                    horaCalculoTV.setText("");
+                    insulinaTotalTV.setText("");
+                    insulinaLentaTotalTV.setText("");
+                    insulinaRapidaTotalTV.setText("");
+                    insulinaActivaLV.setAdapter(null);
+                    insuActivaHelper.eliminarTodasInsulinaActiva();
+                    if (Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
+                        Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(), listaDeInsulinaActivas);
+                    listaDeInsulinaActivas.clear();
+                }
                 insuActivaHelper.close();
-                if(Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
-                    Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(),listaDeInsulinaActivas);
-                listaDeInsulinaActivas.clear();
             }
         });
         alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
@@ -144,7 +162,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void clickCalcular(View view) {
-        CalcularInsulinaActiva();
+        calcularInsulinaActiva();
     }
 
     public void clickFABAgregar(View view) {
@@ -161,14 +179,14 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        CalcularInsulinaActiva();
+        calcularInsulinaActiva();
 
         handler = new Handler(Looper.getMainLooper());
         runnable = new Runnable(){
             @Override
             public void run(){
                 //Toast.makeText(InsulinaActivaCalcularActivity.this,  "onResume", Toast.LENGTH_SHORT).show();
-                CalcularInsulinaActiva();
+                calcularInsulinaActiva();
                 handler.postDelayed(this, PERIODO);
             }
         };

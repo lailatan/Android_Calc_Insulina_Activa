@@ -177,7 +177,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Boolean guardarInsulinaActiva() {
         Boolean guardado=false;
-        Boolean borrarAlarmaPrevia=true;
+        Boolean borrarAlarmaPrevia=false;
         String textoConfirmacion;
         if (validoDatos()) {
             Double unidades = Double.valueOf(unidadesET.getText().toString());
@@ -192,24 +192,30 @@ public class InsulinaActivaActivity extends AppCompatActivity {
             InsulinaActiva insulinaActivaActual = new InsulinaActiva(insulinaActivaId,insulinaAplicada,unidades,
                     dia,mes,anio,hora,minuto,activa,descripcion);
 
-            insulinaActivaActual.calcularTiempoQueRestaActivayDesactivar(this);
+            Long tiempoRestante = insulinaActivaActual.calcularTiempoQueRestaActivayDesactivar(this);
 
-            InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(this);
-            insulinaActivaId = insulinaActivaHelper.guardarInsulinaActiva(insulinaActivaActual);
-            insulinaActivaHelper.close();
+            //if (tiempoRestante>0) {
+                InsulinaActivaSQLiteHelper insulinaActivaHelper = new InsulinaActivaSQLiteHelper(this);
+                insulinaActivaId = insulinaActivaHelper.guardarInsulinaActiva(insulinaActivaActual);
+                insulinaActivaHelper.close();
 
-            if (insulinaActivaActual.getInsulina_activa_id()==0){
-                insulinaActivaActual.setInsulina_activa_id(insulinaActivaId);
-                borrarAlarmaPrevia=false;
-                textoConfirmacion=this.getString(R.string.notif_created);
-            } else textoConfirmacion=this.getString(R.string.notif_modified);
+                if (insulinaActivaActual.getInsulina_activa_id() == 0) {
+                    insulinaActivaActual.setInsulina_activa_id(insulinaActivaId);
+                    textoConfirmacion = this.getString(R.string.notif_created);
+                } else{
+                    textoConfirmacion = this.getString(R.string.notif_modified);
+                    borrarAlarmaPrevia = true;
+                }
 
-            if(Utils.cargarConfigRecibirNotificaciones(this)) {
-                //if (borrarAlarmaPrevia)  Utils.borrarAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaId);
-                Utils.crearAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaActual);
-                Toast.makeText(this, textoConfirmacion, Toast.LENGTH_LONG).show();
-            }
-            guardado=true;
+                if (Utils.cargarConfigRecibirNotificaciones(this)) {
+                    //if (borrarAlarmaPrevia)  Utils.borrarAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaId);
+                    if (tiempoRestante>0) {
+                        Utils.crearAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaActual);
+                        Toast.makeText(this, textoConfirmacion, Toast.LENGTH_LONG).show();
+                    } else if (borrarAlarmaPrevia)  Utils.borrarAlarmaInsulinaActiva(getApplicationContext(), insulinaActivaId);
+                }
+                guardado = true;
+            //} else Toast.makeText(this, getString(R.string.cant_create_inactive_insulin), Toast.LENGTH_LONG).show();
         }
         return guardado;
     }

@@ -103,6 +103,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         } finally {
             //cierro cursor
             cursor.close();
+            db.close();
         }
         return insulinaActivas;
     }
@@ -125,9 +126,11 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
             String whereClause = _ID + "=?";
             String whereArgs[] = {insulinaActiva.getInsulina_activa_id().toString()};
             db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
+            db.close();
             return insulinaActiva.getInsulina_activa_id();
         } else {
             long nuevoIdLNG = db.insert(NOMBRE_TABLA, null, values);
+            db.close();
             return Long.valueOf(nuevoIdLNG).intValue();
         }
     }
@@ -141,6 +144,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         String whereClause = _ID + "=?";
         String whereArgs[] = {insulinaActivaId.toString()};
         db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
+        db.close();
     }
 
     public void eliminarInsulinaActiva(Integer insulinaActivaId) {
@@ -150,11 +154,13 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         String whereArgs[] = {insulinaActivaId.toString()};
 
         db.delete(NOMBRE_TABLA, whereClause,whereArgs);
+        db.close();
     }
 
     public void eliminarTodasInsulinaActiva() {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(NOMBRE_TABLA, null,null);
+        db.close();
     }
 
     public Boolean insulinaEstaUsadaComoActivaPorId(Integer insulinaId) {
@@ -170,9 +176,40 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
             cantidad = cursor.getInt(0);
         } finally {
         //cierro cursor
-        cursor.close();
+            cursor.close();
+            db.close();
         }
         return (cantidad > 0);
     }
-}
 
+    public void eliminarTodasInsulinInaActiva() {
+        SQLiteDatabase db = getWritableDatabase();
+        String whereClause = COLUMNA_ACTIVA + "=?";
+        String whereArgs[] = {"0"};
+        db.delete(NOMBRE_TABLA, whereClause,whereArgs);
+        db.close();
+    }
+
+    public Integer buscarCantidadInsulinasActivas(boolean soloActivas, boolean soloInactivas) {
+        Integer cantidad = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        if (!soloActivas && !soloInactivas) {
+            String sql = "SELECT COUNT (*) FROM " + NOMBRE_TABLA ;
+            cursor = db.rawQuery(sql, null);
+        } else {
+            String sql = "SELECT COUNT (*) FROM " + NOMBRE_TABLA + " WHERE " + COLUMNA_ACTIVA  + "=?";
+            cursor= db.rawQuery(sql, new String[] { String.valueOf(soloActivas?1:0) });
+        }
+
+        try {
+            cursor.moveToFirst();
+            cantidad = cursor.getInt(0);
+        } finally {
+            //cierro cursor
+            cursor.close();
+            db.close();
+        }
+        return cantidad;
+    }
+}

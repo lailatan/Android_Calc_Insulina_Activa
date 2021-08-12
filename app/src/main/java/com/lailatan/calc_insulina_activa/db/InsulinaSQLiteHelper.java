@@ -72,6 +72,7 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
         } finally {
             //cierro cursor
             cursor.close();
+            db.close();
         }
         return insulinas;
     }
@@ -109,6 +110,7 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
         } finally {
             //cierro cursor
             cursor.close();
+            db.close();
         }
         return insulina;
     }
@@ -127,9 +129,11 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
             String whereClause = _ID + "=?";
             String whereArgs[] = {insulina.getInsulina_id().toString()};
             db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
+            db.close();
             return insulina.getInsulina_id();
         } else {
             long nuevoIdLNG = db.insert(NOMBRE_TABLA, null, values);
+            db.close();
             return Long.valueOf(nuevoIdLNG).intValue();
         }
     }
@@ -141,5 +145,6 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
         String whereArgs[] = {insulinaId.toString()};
 
         db.delete(NOMBRE_TABLA, whereClause,whereArgs);
+        db.close();
     }
 }

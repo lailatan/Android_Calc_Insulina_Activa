@@ -43,6 +43,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete_all_active_insulin_confirmation">Do you want to delete all active insulins entered?</string>
+    <string name="delete_all_inactive_insulin_confirmation">There are many inactive insulins stored. Do you want to delete them to speed up the application?</string>
     <string name="insulin_active_data">Insulin data applied</string>
     <string name="select_insuline"><font size="15">Select an insulin</font></string>
     <string name="units_applied">Applied Units: </string>
@@ -85,5 +86,6 @@
     <string name="active_insulin_expired_info">Insulin applied information just ended:</string>
     <string name="notif_not_found">No pending notification was found.</string>
     <string name="notif_all_active_insulin_deleted">Pending notifications were removed.</string>
+    <string name="cant_create_inactive_insulin">You cannot enter an insulin dose that is already inactive.</string>
 
 </resources>

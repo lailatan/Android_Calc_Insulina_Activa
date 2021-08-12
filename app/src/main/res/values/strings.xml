@@ -43,6 +43,7 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="delete_all_active_insulin_confirmation">¿Desea borrar todas las insulinas activas ingresadas?</string>
+    <string name="delete_all_inactive_insulin_confirmation">Hay muchas insulinas inactivas guardadas. ¿Desea borrarlas para agilizar la aplicación?</string>
     <string name="insulin_active_data">Datos de la insulina aplicada </string>
     <string name="select_insuline"><font size="15">Seleccione una insulina</font></string>
     <string name="units_applied">Unidades aplicadas: </string>
@@ -85,5 +86,6 @@
     <string name="active_insulin_expired_info">Información de la Insulina aplicada que acaba de finalizar:</string>
     <string name="notif_not_found">No se encontró notificación pendiente.</string>
     <string name="notif_all_active_insulin_deleted">Se eliminaron las notificaciones pendientes.</string>
+    <string name="cant_create_inactive_insulin">No se puede ingresar una dosis de insulina ya inactiva.</string>
 
 </resources>
