@@ -1,12 +1,9 @@
 package com.lailatan.calc_insulina_activa;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -91,20 +88,15 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyDialogTheme);
             alertDialog.setMessage(R.string.create_notif_confirmation);
             alertDialog.setTitle(R.string.notifications);
-            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+            alertDialog.setIcon(R.drawable.ic_question);
             alertDialog.setCancelable(false);
-            alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                public void onClick(DialogInterface dialog, int which) {
-                    Utils.crearAlarmasTodasInsulinasActivas(getApplicationContext(),listaDeInsulinaActivas);
-                    Toast.makeText(MainActivity.this, getString(R.string.notif_all_active_insulin_created), Toast.LENGTH_LONG).show();
-                }
+            alertDialog.setPositiveButton(R.string.yes, (dialog, which) -> {
+                Utils.crearAlarmasTodasInsulinasActivas(getApplicationContext(),listaDeInsulinaActivas);
+                Toast.makeText(MainActivity.this, getString(R.string.notif_all_active_insulin_created), Toast.LENGTH_LONG).show();
             });
-            alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, getString(R.string.notif_from_now), Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
+            alertDialog.setNegativeButton(R.string.no, (dialog, which) -> {
+                Toast.makeText(MainActivity.this, getString(R.string.notif_from_now), Toast.LENGTH_LONG).show();
+                dialog.dismiss();
             });
             alertDialog.create();
             alertDialog.show();

@@ -124,7 +124,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         String mensaje = getString(soloInactivas?R.string.delete_all_inactive_insulin_confirmation:R.string.delete_all_active_insulin_confirmation);
         alertDialog.setMessage(mensaje);
         alertDialog.setTitle(R.string.delete);
-        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setIcon(R.drawable.ic_question);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
         {

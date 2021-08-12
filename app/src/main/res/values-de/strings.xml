@@ -87,5 +87,7 @@
     <string name="notif_not_found">Es wurde keine ausstehende Benachrichtigung gefunden.</string>
     <string name="notif_all_active_insulin_deleted">Ausstehende Benachrichtigungen wurden entfernt.</string>
     <string name="cant_create_inactive_insulin">Sie können keine Insulindosis eingeben, die bereits inaktiv ist.</string>
+    <string name="color_active">#39a127</string>
+    <string name="color_inactive">#ff0000</string>
 
 </resources>

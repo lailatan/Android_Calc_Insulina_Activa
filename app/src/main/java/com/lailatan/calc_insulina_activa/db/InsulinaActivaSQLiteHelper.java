@@ -163,7 +163,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
     }
 
     public Boolean insulinaEstaUsadaComoActivaPorId(Integer insulinaId) {
-        int cantidad = 0;
+        int cantidad;
         SQLiteDatabase db = getReadableDatabase();
 
         String sql = "SELECT COUNT (*) FROM " + NOMBRE_TABLA + " WHERE " + COLUMNA_INSULINA_ID  + "=?";
@@ -184,13 +184,13 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
     public void eliminarTodasInsulinInaActiva() {
         SQLiteDatabase db = getWritableDatabase();
         String whereClause = COLUMNA_ACTIVA + "=?";
-        String whereArgs[] = {"0"};
+        String[] whereArgs = {"0"};
         db.delete(NOMBRE_TABLA, whereClause,whereArgs);
         db.close();
     }
 
     public Integer buscarCantidadInsulinasActivas(boolean soloActivas, boolean soloInactivas) {
-        Integer cantidad = 0;
+        int cantidad;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
         if (!soloActivas && !soloInactivas) {

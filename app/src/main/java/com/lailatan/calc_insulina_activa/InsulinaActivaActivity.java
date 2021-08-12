@@ -279,7 +279,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         alertDialog.setMessage(R.string.delete_active_insulin_confirmation);
         alertDialog.setTitle(R.string.delete);
-        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setIcon(R.drawable.ic_question);
         alertDialog.setCancelable(false);
         alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
         {
