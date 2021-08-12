@@ -69,15 +69,16 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
             Long tiempoRestante = insuActivaActual.calcularTiempoQueRestaActivayDesactivar(context);
             Double unidadesRestante  = Math.round((insuActivaActual.calcularInsuActivaActual()) * 100.0) / 100.0; //solo 2 decimales
 
-            activaTV.setTextColor(Color.parseColor("#39a127"));
+            //activaTV.setTextColor(Color.parseColor("#39a127"));
+            activaTV.setTextColor(Color.parseColor(context.getString(R.string.color_active)));
             activaTV.setText(R.string.active);
             String unidadesTxt = context.getString(R.string.IU);
 
             if (tiempoRestante>0) {
                 if (tiempoRestante > 180) {
-                    Double valorhoras = Math.round((tiempoRestante / 60.0) * 100.0) / 100.0; //solo 2 decimales
+                    double valorhoras = Math.round((tiempoRestante / 60.0) * 100.0) / 100.0; //solo 2 decimales
                     String tiempoTxt = context.getString(R.string.hours_short);
-                    tiempoActivaTV.setText(String.format("  %s%s ", valorhoras.toString(), tiempoTxt));
+                    tiempoActivaTV.setText(String.format("  %s%s ", Double.toString(valorhoras), tiempoTxt));
                 } else {
                     String tiempoTxt = context.getString(R.string.minutes_short);
                     tiempoActivaTV.setText(String.format("  %s %s ", tiempoRestante.toString(), tiempoTxt));
@@ -85,12 +86,12 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
                 unidadesActivaTV.setText(String.format(" %s %s / ", unidadesRestante.toString(), unidadesTxt));
                 insulinaActivaLL.setVisibility(View.VISIBLE);
             } else {
-                activaTV.setTextColor(Color.parseColor("#ff0000"));
+                activaTV.setTextColor(Color.parseColor(context.getString(R.string.color_inactive)));
                 activaTV.setText(R.string.inactive);
                 insulinaActivaLL.setVisibility(View.INVISIBLE);
             }
         }else {
-            activaTV.setTextColor(Color.parseColor("#ff0000"));
+            activaTV.setTextColor(Color.parseColor(context.getString(R.string.color_inactive)));
             activaTV.setText( R.string.inactive);
             insulinaActivaLL.setVisibility(View.INVISIBLE);
         }

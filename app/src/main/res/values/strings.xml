@@ -87,5 +87,7 @@
     <string name="notif_not_found">No se encontró notificación pendiente.</string>
     <string name="notif_all_active_insulin_deleted">Se eliminaron las notificaciones pendientes.</string>
     <string name="cant_create_inactive_insulin">No se puede ingresar una dosis de insulina ya inactiva.</string>
+    <string name="color_active">#39a127</string>
+    <string name="color_inactive">#ff0000</string>
 
 </resources>

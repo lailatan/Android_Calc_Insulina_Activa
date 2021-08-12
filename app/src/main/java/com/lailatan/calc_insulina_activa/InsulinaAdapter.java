@@ -44,8 +44,8 @@ public class InsulinaAdapter extends ArrayAdapter<Insulina> {
         rapidaTV.setText(insulinaActual.getRapida()==1?R.string.quick:R.string.slow);
 
         duracionMinTV.setText(insulinaActual.getDuracion_minutos().toString());
-        Double valorhoras = Math.round((insulinaActual.getDuracion_minutos() / 60.0) * 100.0) / 100.0; //solo 2 decimales
-        duracionHorasTV.setText(valorhoras.toString());
+        double valorhoras = Math.round((insulinaActual.getDuracion_minutos() / 60.0) * 100.0) / 100.0; //solo 2 decimales
+        duracionHorasTV.setText(Double.toString(valorhoras));
 
         laboratorioTV.setText(insulinaActual.getLaboratorio());
 

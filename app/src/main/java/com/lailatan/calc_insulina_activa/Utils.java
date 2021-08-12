@@ -8,7 +8,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -18,17 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
-import com.lailatan.calc_insulina_activa.db.InsulinaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
 import com.lailatan.calc_insulina_activa.notifications.AlarmBroadcast;
 import com.lailatan.calc_insulina_activa.notifications.BootBroadcast;
-
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,9 +31,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -60,7 +52,7 @@ public class Utils {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Boolean fechaHoraValidaNoFuturoPasado24Horas(String dia, String mes, String anio, String hora, String minuto) {
-        boolean valida = false;
+        boolean valida;
         try {
             //Formato de fecha (día/mes/año)
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -71,8 +63,8 @@ public class Utils {
 
             //Fecha no a futuro ni mas de 24 horas (1440 minutos)
             LocalDateTime fechaIngresada = LocalDateTime.of(Integer.parseInt(anio), Integer.parseInt(mes), Integer.parseInt(dia), Integer.parseInt(hora), Integer.parseInt(minuto));
-            Long diferencia = ChronoUnit.MINUTES.between(fechaIngresada, LocalDateTime.now());
-            valida = (diferencia<=0)&&(diferencia>-1440);
+            long diferencia = ChronoUnit.MINUTES.between(fechaIngresada, LocalDateTime.now());
+            //valida = (diferencia<=0)&&(diferencia>-1440);
             valida = (diferencia>=0)&&(diferencia<1440);
 
         } catch (ParseException e) {
@@ -83,7 +75,7 @@ public class Utils {
     }
 
     public static boolean validarNumero(String texto, int nroDesde, int nroHAsta) {
-        return (!texto.isEmpty() && Integer.valueOf(texto)>=nroDesde && Integer.valueOf(texto)<=nroHAsta);
+        return (!texto.isEmpty() && Integer.parseInt(texto)>=nroDesde && Integer.parseInt(texto)<=nroHAsta);
     }
 
     public static double esNumero(String valor, long cantidadDeEnteros, long cantidadDeDecimales, boolean admiteSignoNegativo)throws UtilException{

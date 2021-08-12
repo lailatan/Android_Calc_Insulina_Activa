@@ -4,8 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -13,10 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
-
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {

@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import static com.lailatan.calc_insulina_activa.db.InsulinaActivaContract.InsulinaActivaEntry.*;
 
 public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
-    private static String NOMBRE_DB = "insulinaactiva.db";
+    private static final String NOMBRE_DB = "insulinaactiva.db";
     private static final int VERSION_DB = 1;
-    private Context contexto;
+    private final Context contexto;
 
     public InsulinaActivaSQLiteHelper(Context context){
         super(context, NOMBRE_DB, null, VERSION_DB);
-        this.contexto=context;
+        this.contexto = context;
     }
 
     @Override
@@ -65,11 +65,10 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         };
 
             String whereClause = soloActivas?COLUMNA_ACTIVA + "=?":null;
-            String whereArgs[] =  soloActivas? new String[]{"1"} :null;
+            String[] whereArgs =  soloActivas? new String[]{"1"} :null;
             String orderby = InsulinaContract.InsulinaEntry._ID + " DESC";
 
-        Cursor cursor = db.query(NOMBRE_TABLA,
-                columnas,whereClause, whereArgs, null, null, orderby);
+        Cursor cursor = db.query(NOMBRE_TABLA, columnas,whereClause, whereArgs, null, null, orderby);
         try {
             int columnaIdIndex = cursor.getColumnIndex(_ID);
             int columnaInsulinaIdIndex = cursor.getColumnIndex(COLUMNA_INSULINA_ID);
@@ -124,7 +123,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
 
         if (insulinaActiva.getInsulina_activa_id()!=0) {
             String whereClause = _ID + "=?";
-            String whereArgs[] = {insulinaActiva.getInsulina_activa_id().toString()};
+            String[] whereArgs = {insulinaActiva.getInsulina_activa_id().toString()};
             db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
             db.close();
             return insulinaActiva.getInsulina_activa_id();
@@ -142,7 +141,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMNA_ACTIVA,0);
 
         String whereClause = _ID + "=?";
-        String whereArgs[] = {insulinaActivaId.toString()};
+        String[] whereArgs = {insulinaActivaId.toString()};
         db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
         db.close();
     }
@@ -151,7 +150,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         String whereClause = _ID + "=?";
-        String whereArgs[] = {insulinaActivaId.toString()};
+        String[] whereArgs = {insulinaActivaId.toString()};
 
         db.delete(NOMBRE_TABLA, whereClause,whereArgs);
         db.close();
@@ -164,7 +163,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
     }
 
     public Boolean insulinaEstaUsadaComoActivaPorId(Integer insulinaId) {
-        Integer cantidad = 0;
+        int cantidad = 0;
         SQLiteDatabase db = getReadableDatabase();
 
         String sql = "SELECT COUNT (*) FROM " + NOMBRE_TABLA + " WHERE " + COLUMNA_INSULINA_ID  + "=?";

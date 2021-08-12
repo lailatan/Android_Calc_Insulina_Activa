@@ -91,7 +91,7 @@ public class InsulinaActivity extends AppCompatActivity {
     }
 
     private Boolean guardarInsulina() {
-        Boolean guardado=false;
+        boolean guardado=false;
         if (insulinaEnUso()) {
             Toast.makeText(getApplicationContext(), R.string.cant_modif_in_use_insulin,Toast.LENGTH_LONG).show();
         } else {
@@ -122,7 +122,7 @@ public class InsulinaActivity extends AppCompatActivity {
     }
 
     private boolean datosValidos() {
-        Boolean validos=false;
+        boolean validos=false;
 
         if (nombreET.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.must_enter_name,Toast.LENGTH_LONG).show();
@@ -145,9 +145,9 @@ public class InsulinaActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.must_duration_bigger_than_zero, Toast.LENGTH_LONG).show();
                 duracionHorET.requestFocus();
             } else {
-                Double valorhoras = Double.parseDouble(duracionHorET.getText().toString());
-                Integer valorminutos = (int) (valorhoras * 60);
-                duracionMinET.setText(valorminutos.toString());
+                double valorhoras = Double.parseDouble(duracionHorET.getText().toString());
+                int valorminutos = (int) (valorhoras * 60);
+                duracionMinET.setText(Integer.toString(valorminutos));
                 duracionHorET.setVisibility(View.GONE);
                 duracionMinET.setVisibility(View.VISIBLE);
                 duracionHorET.setText("");
@@ -208,14 +208,14 @@ public class InsulinaActivity extends AppCompatActivity {
     }
 
     public void clickMinHorasRB(View view) {
-        Double valorhoras;
-        Integer valorminutos;
+        double valorhoras;
+        int valorminutos;
         Utils.hideKeyboard(this);
         if (minutosRB.isChecked() && duracionMinET.getVisibility()==View.GONE) {
             if (!duracionHorET.getText().toString().isEmpty()) {
                 valorhoras = Double.parseDouble(duracionHorET.getText().toString());
                 valorminutos = (int) (valorhoras * 60);
-                duracionMinET.setText(valorminutos.toString());
+                duracionMinET.setText(Integer.toString(valorminutos));
                 duracionHorET.setText("");
             }
         } else if (horasRB.isChecked() && duracionHorET.getVisibility()==View.GONE) {
@@ -225,7 +225,7 @@ public class InsulinaActivity extends AppCompatActivity {
                 valorhoras = valorminutos / 60.0;
                 //valorhoras = Math.round(valorhoras * 100.0) / 100.0; //solo 2 decimales
                 duracionMinET.setText("");
-                duracionHorET.setText(valorhoras.toString());
+                duracionHorET.setText(Double.toString(valorhoras));
             }
         }
 

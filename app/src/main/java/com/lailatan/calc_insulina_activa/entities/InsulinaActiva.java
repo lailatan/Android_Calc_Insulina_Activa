@@ -174,7 +174,7 @@ public class InsulinaActiva implements Serializable {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Double calcularInsuActivaActual() {
-        Double insulinaActivaActual = 0.00;
+        double insulinaActivaActual = 0.00;
         if (this.getActiva()==1) {
             Long diferencia = ChronoUnit.MINUTES.between(this.getFechaDesde(), LocalDateTime.now());
             if ((diferencia >= 0) && (diferencia < this.getInsulina().getDuracion_minutos())) {

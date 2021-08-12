@@ -6,16 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
-
 import com.lailatan.calc_insulina_activa.InsulinaActivaCalcularActivity;
 import com.lailatan.calc_insulina_activa.R;
-import com.lailatan.calc_insulina_activa.Utils;
-import com.lailatan.calc_insulina_activa.entities.Insulina;
-
 import static com.lailatan.calc_insulina_activa.Utils.*;
 
 public class AlarmBroadcast extends BroadcastReceiver {
@@ -27,7 +22,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
 
         Bundle datos =intent.getExtras();
         String texto=datos.getString(C_TEXTO);
-        Integer idAlarma=datos.getInt(C_ID_MENSAJE);
+        int idAlarma=datos.getInt(C_ID_MENSAJE);
 
         // Create an Intent for the activity you want to start
         Intent intentProximo = new Intent(context, InsulinaActivaCalcularActivity.class);
@@ -42,8 +37,8 @@ public class AlarmBroadcast extends BroadcastReceiver {
         //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentProximo, 0);
 
         NotificationCompat.Builder notificationBuilder =  new NotificationCompat.Builder( context, channelId)
-                .setSmallIcon(android.R.drawable.ic_menu_my_calendar)
-                //.setSmallIcon(R.drawable.insulina_activa)
+                //.setSmallIcon(android.R.drawable.ic_menu_my_calendar)
+                .setSmallIcon(R.drawable.ic_medic_white)
                 .setContentTitle (context.getString(R.string.active_insulin_expired))
                 //.setContentText ("mensaje")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(texto))
@@ -57,7 +52,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
 
         Log.i("AlarmBroadcast", "Crear notificacion");
         Log.i("AlarmBroadcast", texto);
-        Log.i("AlarmBroadcast", idAlarma.toString());
+        Log.i("AlarmBroadcast", Integer.toString(idAlarma));
         Log.i("AlarmBroadcast", intent.getData().toString());
 
     }

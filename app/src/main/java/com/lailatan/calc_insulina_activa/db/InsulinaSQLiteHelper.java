@@ -5,14 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.lailatan.calc_insulina_activa.InsulinaActivaCalcularActivity;
 import com.lailatan.calc_insulina_activa.entities.Insulina;
 import static com.lailatan.calc_insulina_activa.db.InsulinaContract.InsulinaEntry.*;
 import java.util.ArrayList;
 
 public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
-    private static String NOMBRE_DB = "insulina.db";
+    private static final String NOMBRE_DB = "insulina.db";
     private static final int VERSION_DB = 1;
 
     public InsulinaSQLiteHelper(Context context){
@@ -84,7 +82,7 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
         String[] columnas = {_ID, COLUMNA_NOMBRE, COLUMNA_LABORATORIO, COLUMNA_RAPIDA, COLUMNA_DURACION_MINUTOS, COLUMNA_DESCRIPCION};
 
         String whereClause = _ID + "=?";
-        String whereArgs[] = {insulinaId.toString()};
+        String[] whereArgs = {insulinaId.toString()};
 
         Cursor cursor = db.query(NOMBRE_TABLA,
                 columnas, whereClause, whereArgs, null, null, null);
@@ -127,7 +125,7 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
 
         if (insulina.getInsulina_id()!=0) {
             String whereClause = _ID + "=?";
-            String whereArgs[] = {insulina.getInsulina_id().toString()};
+            String[] whereArgs = {insulina.getInsulina_id().toString()};
             db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
             db.close();
             return insulina.getInsulina_id();
@@ -142,7 +140,7 @@ public class InsulinaSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         String whereClause = _ID + "=?";
-        String whereArgs[] = {insulinaId.toString()};
+        String[] whereArgs = {insulinaId.toString()};
 
         db.delete(NOMBRE_TABLA, whereClause,whereArgs);
         db.close();

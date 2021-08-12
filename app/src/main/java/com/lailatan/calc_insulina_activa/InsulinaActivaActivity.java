@@ -2,7 +2,6 @@ package com.lailatan.calc_insulina_activa;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Rect;
@@ -10,26 +9,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.db.InsulinaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.Insulina;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class InsulinaActivaActivity extends AppCompatActivity {
-    private static final String C_INSULINABUSQUEDA = "insulina";
     private static final String C_INSULINA_ACTIVA = "insulina_activa";
 
     private Integer insulinaActivaId;
@@ -111,8 +106,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     private void cargarDatosInsulina(Insulina insulina) {
         insulinaAplicada=insulina;
         duracionMinTV.setText(insulina.getDuracion_minutos().toString());
-        Double valorhoras = Math.round((insulina.getDuracion_minutos() / 60.0) * 100.0) / 100.0; //solo 2 decimales
-        duracionHorasTV.setText(valorhoras.toString());
+        double valorhoras = Math.round((insulina.getDuracion_minutos() / 60.0) * 100.0) / 100.0; //solo 2 decimales
+        duracionHorasTV.setText(Double.toString(valorhoras));
         insulinaET.setText(insulina.getNombre() +" - " + insulina.getLaboratorio());
         rapidaTV.setText(insulina.getRapida()==1?R.string.quick:R.string.slow);
     }
@@ -136,7 +131,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         final List<String> insulinas = new ArrayList<>();
         final List<Integer> insulinasId = new ArrayList<>();
 
-        for (Integer i=0;i<listaInsulinas.size();i=i+1) {
+        for (int i = 0; i<listaInsulinas.size(); i=i+1) {
             insulinas.add(listaInsulinas.get(i).getNombre() +" - " + listaInsulinas.get(i).getLaboratorio());
             insulinasId.add(listaInsulinas.get(i).getInsulina_id());
         }
@@ -144,8 +139,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         if (insulinas.size()==0){
             Toast.makeText(getApplicationContext(), R.string.no_insulin_msg, Toast.LENGTH_LONG).show();
         } else {
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_dropdown_item_1line, insulinas);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, insulinas);
             builder.setAdapter(dataAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -176,8 +170,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Boolean guardarInsulinaActiva() {
-        Boolean guardado=false;
-        Boolean borrarAlarmaPrevia=false;
+        boolean guardado=false;
+        boolean borrarAlarmaPrevia=false;
         String textoConfirmacion;
         if (validoDatos()) {
             Double unidades = Double.valueOf(unidadesET.getText().toString());
@@ -222,7 +216,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validoDatos() {
-        Boolean datosValidos=false;
+        boolean datosValidos=false;
         if (insulinaET.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.must_select_insulin, Toast.LENGTH_LONG).show();
             insulinaET.requestFocus();
@@ -238,7 +232,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean fechaValida() {
-        Boolean datosValidos=false;
+        boolean datosValidos=false;
          if (FechaIngresada()) {
              if (!Utils.fechaHoraValidaNoFuturoPasado24Horas(diaET.getText().toString(), mesET.getText().toString(), anioET.getText().toString(),
                      horaET.getText().toString(), minutoET.getText().toString())) {

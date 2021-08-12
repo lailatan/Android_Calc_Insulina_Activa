@@ -4,10 +4,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
-        android:icon="@drawable/insulina_ico"
+        android:icon="@mipmap/ic_insulin_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/insulina_ico"
+        android:roundIcon="@mipmap/ic_insulin_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
