@@ -170,7 +170,7 @@
                             android:hint="@string/enter_insulin_descrption"
                             android:singleLine="false"
                             android:imeOptions="actionDone"
-                            android:inputType="textPersonName|textMultiLine"
+                            android:inputType="textPersonName|textCapSentences|textMultiLine"
                             android:lines="8"
                             android:minLines="10"
                             android:gravity="top|start"

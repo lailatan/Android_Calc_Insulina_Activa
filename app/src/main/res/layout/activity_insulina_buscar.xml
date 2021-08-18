@@ -15,8 +15,7 @@
 
         <TextView
             style="@style/TextViewNombrePantalla"
-            android:text="@string/search_insulin"
-            />
+            android:text="@string/search_insulin" />
 
         <ImageView
             android:layout_width="0dp"
