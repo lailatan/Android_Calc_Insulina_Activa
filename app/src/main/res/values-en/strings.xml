@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Active Insulin</string>
+    <string name="app_name">Active IU</string>
     <string name="active_insulin_title">Active Insulin</string>
     <string name="active_insulin">Active Insulin: </string>
     <string name="calc_time">Calculation Time: </string>
@@ -42,8 +42,8 @@
     <string name="delete">Remove</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="delete_all_active_insulin_confirmation">Do you want to delete all active insulins entered?</string>
-    <string name="delete_all_inactive_insulin_confirmation">There are many inactive insulins stored. Do you want to delete them to speed up the application?</string>
+    <string name="delete_all_inactive_insulin_confirmation">Do you want to delete all inactive insulins entered?</string>
+    <string name="delete_all_stores_inactive_insulin_confirmation">There are many inactive insulins stored. Do you want to delete them to speed up the application?</string>
     <string name="insulin_active_data">Insulin data applied</string>
     <string name="select_insuline"><font size="15">Select an insulin</font></string>
     <string name="units_applied">Applied Units: </string>
@@ -74,8 +74,9 @@
     <string name="cant_delete_in_use_insulin">You cannot delete an Insulin in use.</string>
     <string name="cant_modif_in_use_insulin">You cannot modify an Insulin in use.</string>
     <string name="total">TOTAL</string>
-    <string name="receive_notifications">Receive Notifications</string>
+    <string name="receive_notifications">Receive Alerts</string>
     <string name="must_have_notificaion_permissions">Sie müssen Benachrichtigungen für diese App zulassen. Bitte ändern Sie diese Einstellung in den Geräteeinstellungen und versuchen Sie es erneut.</string>
+    <string name="must_have_backup_permissions">You must allow access to Storage for this app</string>
     <string name="active_insulin_expired">Active Insulin erminated</string>
     <string name="notif_created">Notification created</string>
     <string name="notif_modified">Notification changed</string>
@@ -89,5 +90,12 @@
     <string name="cant_create_inactive_insulin">You cannot enter an insulin dose that is already inactive.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
+    <string name="backup_file">Save copy of data to file</string>
+    <string name="backup_file_name">AI_Backup.txt</string>
+    <string name="backup_success">"Successful data backup to Archive: "</string>
+    <string name="backup_fail_permission">Data backup could not be generated. Check the application permissions.</string>
+    <string name="backup_fail_space_or_permission">The backup could not be generated. Verify that you have storage space on the device and / or application permissions.</string>
+    <string name="backup_file_headers">Insulin;Laboratory;Units;Duration;Time;Description;</string>
+    <string name="backup_path">\"A backup of inactive insulins will be saved in \"</string>
 
 </resources>

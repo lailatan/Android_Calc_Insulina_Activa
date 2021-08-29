@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aktives Insulin</string>
+    <string name="app_name">Aktives IE</string>
     <string name="active_insulin_title">Aktives Insulin</string>
     <string name="active_insulin">Aktives Insulin: </string>
     <string name="calc_time">Berechnungszeit: </string>
@@ -42,8 +42,8 @@
     <string name="delete">Remove</string>
     <string name="yes">Ja</string>
     <string name="no">Nicht</string>
-    <string name="delete_all_active_insulin_confirmation">Möchten Sie alle eingegebenen aktiven Insuline löschen?</string>
-    <string name="delete_all_inactive_insulin_confirmation">Es werden viele inaktive Insuline gespeichert. Möchten Sie sie löschen, um die Anwendung zu beschleunigen?</string>
+    <string name="delete_all_inactive_insulin_confirmation">Möchten Sie alle eingegebenen inaktiven Insuline löschen?</string>
+    <string name="delete_all_stores_inactive_insulin_confirmation">Es werden viele inaktive Insuline gespeichert. Möchten Sie sie löschen, um die Anwendung zu beschleunigen?</string>
     <string name="insulin_active_data">Angewandte Insulindaten</string>
     <string name="select_insuline"><font size="15">Wählen Sie ein Insulin aus</font></string>
     <string name="units_applied">Angewandte Einheiten: </string>
@@ -74,8 +74,9 @@
     <string name="cant_delete_in_use_insulin">Sie können kein Insulin in Gebrauch löschen.</string>
     <string name="cant_modif_in_use_insulin">Sie können ein verwendetes Insulin nicht ändern.</string>
     <string name="total">GESAMT</string>
-    <string name="receive_notifications">Benachrichtigungen erhalten</string>
+    <string name="receive_notifications">Meldungen erhalten</string>
     <string name="must_have_notificaion_permissions">Sie müssen Benachrichtigungen für diese App zulassen. Bitte ändern Sie diese Einstellung in den Geräteeinstellungen und versuchen Sie es erneut.</string>
+    <string name="must_have_backup_permissions">Sie müssen Zugriff auf Speicher für diese Anwendung zulassen</string>
     <string name="active_insulin_expired">aktives Insulin beendet</string>
     <string name="notif_created">Benachrichtigung erstellt</string>
     <string name="notif_modified">Benachrichtigung geändert</string>
@@ -89,5 +90,12 @@
     <string name="cant_create_inactive_insulin">Sie können keine Insulindosis eingeben, die bereits inaktiv ist.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
+    <string name="backup_file">Kopie der Daten in Datei speichern</string>
+    <string name="backup_file_name">AI_Backup.txt</string>
+    <string name="backup_success">"Erfolgreiche Datensicherung ins Archiv:  "</string>
+    <string name="backup_fail_permission">Datensicherung konnte nicht erstellt werden. Überprüfen Sie die Anwendungsberechtigungen.</string>
+    <string name="backup_fail_space_or_permission">Die Sicherung konnte nicht erstellt werden. Stellen Sie sicher, dass Sie über Speicherplatz auf dem Gerät und / oder Anwendungsberechtigungen verfügen.</string>
+    <string name="backup_file_headers">Insulin;Labor;Einheiten;Dauer;Bewerbungszeit;Beschreibung;</string>
+    <string name="backup_path">\"Ein Backup von inaktiven Insulinen wird gespeichert in \"</string>
 
 </resources>

@@ -1,10 +1,15 @@
 package com.lailatan.calc_insulina_activa;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -14,13 +19,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     CheckBox notificacionesCB;
+    CheckBox archivoCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         notificacionesCB = findViewById(R.id.notificacionesCB);
+        archivoCB = findViewById(R.id.archivoCB);
         cargarDatosNotificaciones();
+        cargarDatosBackupArchivo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cargarDatosNotificaciones();
+        cargarDatosBackupArchivo();
     }
 
     public void clickConfiguracion(View view) {
@@ -51,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void cargarDatosBackupArchivo() {
+        if (Utils.cargarConfigBackupArchivo(this)) {
+            if (Utils.tienePermisoParaArchivos(this)) {
+                archivoCB.setChecked(true);
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+            }
+        } else {
+            archivoCB.setChecked(false);
+        }
+    }
+
     public void clickRecibirNotificaciones(View view) {
         if (notificacionesCB.isChecked()){
             if (Utils.tienePermisoParaNotificaciones(this)) {
@@ -67,6 +94,34 @@ public class MainActivity extends AppCompatActivity {
             Utils.guardarConfigRecibirNotificaciones(this,false);
             borrarAlarmasViejas();
             Utils.desHabilitarAlarmasEnBoot(getApplicationContext());
+        }
+    }
+
+    public void clickGuardarEnArchivo(View view){
+        if (archivoCB.isChecked()){
+            if (!Utils.tienePermisoParaArchivos(this))
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+            else {
+                Utils.guardarConfigBackupArchivo(this, true);
+                String path = getString(R.string.app_name) + "/";
+                Toast.makeText(this, getString(R.string.backup_path) + path, Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Utils.guardarConfigBackupArchivo(this,false);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (Utils.tienePermisoParaArchivos(this)) {
+            Utils.guardarConfigBackupArchivo(this,true);
+            String path= getString(R.string.app_name) + "/";
+            Toast.makeText(this, getString(R.string.backup_path) + path, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Utils.guardarConfigBackupArchivo(this,false);
+            archivoCB.setChecked(false);
         }
     }
 
@@ -102,4 +157,6 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         }
     }
+
+
 }

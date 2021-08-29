@@ -2,7 +2,9 @@ package com.lailatan.calc_insulina_activa;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 
 public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     public static final long PERIODO = 60000; // 60 segundos (60 * 1000 millisegundos) // 5 minutos 60000 * 5 = 300000
-    private static final Integer C_TOPE_INACTIVAS = 10;
+    private static final Integer C_TOPE_INACTIVAS = 4;
     private Handler handler;
     private Runnable runnable;
     private static final String C_INSULINA_ACTIVA = "insulina_activa";
@@ -51,8 +54,9 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         insulinaLentaTotalTV=findViewById(R.id.insulinaLentaTotalTV);
         vacioTV=findViewById(R.id.vacioTV);
 
-        //calcularInsulinaActiva();
-        verificarCantidadInsulinasInactivas();
+        calcularInsulinaActiva();
+        borrarInsuActivayControles(true,false);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -78,7 +82,6 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     }
 
     private void cargarInsulinasActivas() {
-
         InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
         listaDeInsulinaActivas = insuActivaHelper.buscarInsulinaActivas(false);
         insuActivaHelper.close();
@@ -103,61 +106,67 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         }
     }
 
-
     //Botones
     public void clickLimpiar(View view) {
-        borrarInsuActivayControles(false);
+        borrarInsuActivayControles(true,true);
     }
 
-    private void verificarCantidadInsulinasInactivas() {
-
+    private void borrarInsuActivayControles(boolean soloInactivas, boolean porEleccionUsuario) {
         InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
-        Integer cantidad = insuActivaHelper.buscarCantidadInsulinasActivas(false,true);
+        Integer cantidadInactivas = insuActivaHelper.buscarCantidadInsulinasActivas(false,true);
         insuActivaHelper.close();
-        Log.i("InsulinaActivaCalcular","Insulinas inactivas --> " + cantidad.toString());
-        if (cantidad>C_TOPE_INACTIVAS)
-            borrarInsuActivayControles(true);
-    }
+        Log.i("InsulinaActivaCalcular","Insulinas inactivas --> " + cantidadInactivas.toString());
 
-    private void borrarInsuActivayControles(boolean soloInactivas) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-        String mensaje = getString(soloInactivas?R.string.delete_all_inactive_insulin_confirmation:R.string.delete_all_active_insulin_confirmation);
-        alertDialog.setMessage(mensaje);
-        alertDialog.setTitle(R.string.delete);
-        alertDialog.setIcon(R.drawable.ic_question);
-        alertDialog.setCancelable(false);
-        alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
-        {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            public void onClick(DialogInterface dialog, int which)
-            {
-                InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaCalcularActivity.this);
-                if (soloInactivas) {
-                    insuActivaHelper.eliminarTodasInsulinInaActiva();
-                    calcularInsulinaActiva();
-                } else {
-                    horaCalculoTV.setText("");
-                    insulinaTotalTV.setText("");
-                    insulinaLentaTotalTV.setText("");
-                    insulinaRapidaTotalTV.setText("");
-                    insulinaActivaLV.setAdapter(null);
-                    insuActivaHelper.eliminarTodasInsulinaActiva();
-                    if (Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
-                        Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(), listaDeInsulinaActivas);
-                    listaDeInsulinaActivas.clear();
+        if (cantidadInactivas>C_TOPE_INACTIVAS||(cantidadInactivas>0 && porEleccionUsuario)) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+            String mensaje = getString(porEleccionUsuario ? R.string.delete_all_inactive_insulin_confirmation : R.string.delete_all_stores_inactive_insulin_confirmation);
+            alertDialog.setMessage(mensaje);
+            alertDialog.setTitle(R.string.delete);
+            alertDialog.setIcon(R.drawable.ic_question);
+            alertDialog.setCancelable(false);
+            alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                public void onClick(DialogInterface dialog, int which) {
+                    boolean hacerBackup = Utils.cargarConfigBackupArchivo(InsulinaActivaCalcularActivity.this);
+                    boolean tienePermiso = hacerBackup && Utils.tienePermisoParaArchivos(InsulinaActivaCalcularActivity.this);
+                    if ((!hacerBackup) || (hacerBackup && tienePermiso)) {
+                        if (hacerBackup) Utils.escribirEnArchivo(InsulinaActivaCalcularActivity.this, listaDeInsulinaActivas);
+                        InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(InsulinaActivaCalcularActivity.this);
+                        if (soloInactivas) {
+                            insuActivaHelper.eliminarTodasInsulinInaActiva();
+                            calcularInsulinaActiva();
+                        } else {
+                            horaCalculoTV.setText("");
+                            insulinaTotalTV.setText("");
+                            insulinaLentaTotalTV.setText("");
+                            insulinaRapidaTotalTV.setText("");
+                            insulinaActivaLV.setAdapter(null);
+                            insuActivaHelper.eliminarTodasInsulinaActiva();
+                            if (Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
+                                Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(), listaDeInsulinaActivas);
+                            listaDeInsulinaActivas.clear();
+                        }
+                        insuActivaHelper.close();
+                    } else {
+                        ActivityCompat.requestPermissions(InsulinaActivaCalcularActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
+                    }
+
                 }
-                insuActivaHelper.close();
-            }
-        });
-        alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int which)
-            {
-                dialog.dismiss();
-            }
-        });
-        alertDialog.create();
-        alertDialog.show();
+            });
+            alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.create();
+            alertDialog.show();
+        } else {
+            horaCalculoTV.setText("");
+            insulinaTotalTV.setText("");
+            insulinaLentaTotalTV.setText("");
+            insulinaRapidaTotalTV.setText("");
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

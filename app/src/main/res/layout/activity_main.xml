@@ -29,13 +29,12 @@
             android:gravity="center"
             android:textSize="30sp"
             android:textColor="@color/white"
-            android:onClick="clickCalcularInsuActiva"
             android:text="@string/calc_active_insulin" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/borde_main__botones"
+        android:background="@drawable/borde_main_botones"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="5dp"
@@ -73,7 +72,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/borde_main__botones"
+        android:background="@drawable/borde_main_botones"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="5dp"
@@ -115,6 +114,14 @@
             android:checked="false"
             android:onClick="clickRecibirNotificaciones"
             android:id="@+id/notificacionesCB"/>
+
+        <CheckBox
+            style="@style/EditTextIngresoDatos"
+            android:textColor="@color/white"
+            android:text="@string/backup_file"
+            android:checked="false"
+            android:onClick="clickGuardarEnArchivo"
+            android:id="@+id/archivoCB"/>
 
     </LinearLayout>
 

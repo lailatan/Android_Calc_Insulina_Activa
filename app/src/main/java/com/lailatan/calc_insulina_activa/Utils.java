@@ -1,6 +1,7 @@
 package com.lailatan.calc_insulina_activa;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -13,16 +14,29 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
 import com.lailatan.calc_insulina_activa.notifications.AlarmBroadcast;
 import com.lailatan.calc_insulina_activa.notifications.BootBroadcast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.channels.FileChannel;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -196,7 +210,7 @@ public class Utils {
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
             int importancia = NotificationManager.IMPORTANCE_HIGH;
             //int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            String nombre=contexto.getString(R.string.app_name) + "Channel";
+            String nombre=contexto.getString(R.string.app_name) + " Channel";
             String descripcion="Notification Channel for " + contexto.getString(R.string.app_name);
             NotificationChannel channel = new NotificationChannel(channelId, nombre, importancia);
             channel.setDescription(descripcion);
@@ -328,4 +342,71 @@ public class Utils {
                 PackageManager.DONT_KILL_APP);
     }
 
+    public static boolean tienePermisoParaArchivos(Context contexto) {
+        boolean permiso=false;
+        int permissionCheck = ContextCompat.checkSelfPermission(contexto, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED)
+            Toast.makeText(contexto, contexto.getString(R.string.must_have_backup_permissions), Toast.LENGTH_SHORT).show();
+        else permiso=true;
+        return permiso;
+    }
+
+    //guardar configuración aplicación Android usando SharedPreferences
+    public static void guardarConfigBackupArchivo(Context contexto, Boolean guardarEnArchivo) {
+        SharedPreferences prefs = contexto.getSharedPreferences(contexto.getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("BackupFile", guardarEnArchivo);
+        editor.commit();
+    }
+
+    //cargar configuración aplicación Android usando SharedPreferences
+    public static Boolean cargarConfigBackupArchivo(Context contexto) {
+        SharedPreferences prefs = contexto.getSharedPreferences(contexto.getString(R.string.app_name), Context.MODE_PRIVATE);
+        return prefs.getBoolean("BackupFile", false);
+    }
+
+    public static void escribirEnArchivo(Context contexto, ArrayList<InsulinaActiva> listaDeInsulinaActivas) {
+        String archivoNombre=contexto.getString(R.string.backup_file_name);
+        String mensaje="";
+        String texto="";
+        boolean archivoNuevo=false;
+        if (tienePermisoParaArchivos(contexto)) {
+            try {
+                String carpeta_backup_path = Environment.getExternalStorageDirectory() + "/" + contexto.getString(R.string.app_name) + "/";
+                File carpeta_backup_file = new File(carpeta_backup_path);
+
+                if (!carpeta_backup_file.exists()) carpeta_backup_file.mkdir();
+
+                if (carpeta_backup_file.canWrite()) {
+                    File backupDB = new File(carpeta_backup_file, archivoNombre);
+                    if (!backupDB.exists()) {
+                        backupDB.createNewFile();
+                        archivoNuevo=true;
+                    }
+
+                    //for (InsulinaActiva insulinaActiva : listaDeInsulinaActivas)
+                    //    if (insulinaActiva.getActiva() == 0) texto += insulinaActiva.toString() + "\n";
+                    for (int i= listaDeInsulinaActivas.size()-1; i>=0 ; i--)
+                        if (listaDeInsulinaActivas.get(i).getActiva() == 0) texto += listaDeInsulinaActivas.get(i).toString() + "\n";
+
+
+                    FileWriter archivo = new FileWriter(backupDB, true);
+                    if (archivoNuevo) archivo.write(contexto.getString(R.string.backup_file_headers) + "\n");
+                    archivo.write(texto);
+                    archivo.flush();
+                    archivo.close();
+
+                    mensaje = mensaje + contexto.getString(R.string.backup_success) + " " + contexto.getString(R.string.app_name) + "/" + archivoNombre;
+                } else {
+                    mensaje = contexto.getString(R.string.backup_fail_permission);
+                }
+
+            } catch (Exception e) {
+                mensaje = contexto.getString(R.string.backup_fail_space_or_permission);
+                e.printStackTrace();
+            }
+
+        }
+        Toast.makeText(contexto, mensaje, Toast.LENGTH_SHORT).show();
+    }
 }

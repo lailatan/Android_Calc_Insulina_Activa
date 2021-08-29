@@ -66,7 +66,11 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
 
             String whereClause = soloActivas?COLUMNA_ACTIVA + "=?":null;
             String[] whereArgs =  soloActivas? new String[]{"1"} :null;
-            String orderby = InsulinaContract.InsulinaEntry._ID + " DESC";
+            String orderby =  COLUMNA_ANIO_DESDE + " DESC, " +
+                    COLUMNA_MES_DESDE + " DESC, " +
+                    COLUMNA_DIA_DESDE + " DESC, " +
+                    COLUMNA_HORA_DESDE + " DESC, " +
+                    COLUMNA_MINUTO_DESDE + " DESC " ;
 
         Cursor cursor = db.query(NOMBRE_TABLA, columnas,whereClause, whereArgs, null, null, orderby);
         try {
@@ -142,7 +146,10 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
 
         String whereClause = _ID + "=?";
         String[] whereArgs = {insulinaActivaId.toString()};
+        db.beginTransaction();
         db.update(NOMBRE_TABLA, values, whereClause, whereArgs);
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
     }
 

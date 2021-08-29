@@ -9,6 +9,7 @@ import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class InsulinaActiva implements Serializable {
@@ -134,18 +135,15 @@ public class InsulinaActiva implements Serializable {
 
     @Override
     public String toString() {
-        return "InsulinaActiva{" +
-                "insulina_activa_id=" + insulina_activa_id +
-                ", insulina=" + insulina +
-                ", unidades=" + unidades +
-                ", dia_desde=" + dia_desde +
-                ", mes_desde=" + mes_desde +
-                ", anio_desde=" + anio_desde +
-                ", hora_desde=" + hora_desde +
-                ", minuto_desde=" + minuto_desde +
-                ", activa=" + activa +
-                ", descripcion='" + descripcion + '\'' +
-                '}';
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime fechaHoraAplicacion = getFechaDesde();
+        return  "'" + insulina.getNombre() +
+                "';'" + insulina.getLaboratorio() +
+                "';" + unidades +
+                ";" + insulina.getDuracion_minutos() +
+                ";'" + fechaHoraAplicacion.format(dateTimeFormat) +
+                "';'" + descripcion +
+                "';";
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
