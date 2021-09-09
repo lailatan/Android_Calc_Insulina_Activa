@@ -3,6 +3,7 @@ package com.lailatan.calc_insulina_activa;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
         if (insuActivaActual.getActiva()==1) {
             Long tiempoRestante = insuActivaActual.calcularTiempoQueRestaActivayDesactivar(context);
             Double unidadesRestante  = Math.round((insuActivaActual.calcularInsuActivaActual()) * 100.0) / 100.0; //solo 2 decimales
-
+            Log.i("IAAdapter","insulina ACTIVA queda minutos" + tiempoRestante);
             //activaTV.setTextColor(Color.parseColor("#39a127"));
             activaTV.setTextColor(Color.parseColor(context.getString(R.string.color_active)));
             activaTV.setText(R.string.active);

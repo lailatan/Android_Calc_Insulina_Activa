@@ -14,7 +14,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".25"
         android:layout_margin="5dp"
         android:gravity="center"
         android:paddingTop="50dp"
@@ -36,7 +37,8 @@
     <LinearLayout
         android:background="@drawable/borde_main_botones"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="10dp"
@@ -64,7 +66,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="0dp"
+        android:layout_weight=".02"
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="10dp"
@@ -74,7 +77,8 @@
     <LinearLayout
         android:background="@drawable/borde_main_botones"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
+        android:layout_weight=".20"
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="10dp"
@@ -99,11 +103,13 @@
             android:onClick="clickConfiguracion"
             android:text="@string/config" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".25"
         android:layout_margin="5dp"
-        android:gravity="center"
+        android:gravity="bottom"
         android:padding="10dp"
         android:orientation="vertical">
 

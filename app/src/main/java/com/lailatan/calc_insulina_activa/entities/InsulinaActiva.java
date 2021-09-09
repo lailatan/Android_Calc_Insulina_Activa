@@ -156,7 +156,7 @@ public class InsulinaActiva implements Serializable {
         Long diferencia = null;
         if (this.getActiva()==1) {
             diferencia = ChronoUnit.MINUTES.between(this.getFechaDesde(), LocalDateTime.now());
-            if ((diferencia < 0) || (diferencia > this.getInsulina().getDuracion_minutos())) {
+            if ((diferencia < 0) || (diferencia >= this.getInsulina().getDuracion_minutos())) {
                 this.setActiva(0);
                 diferencia = null;
                 if (this.getInsulina_activa_id()!=0) {

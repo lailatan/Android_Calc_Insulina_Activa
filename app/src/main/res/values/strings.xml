@@ -90,7 +90,7 @@
     <string name="cant_create_inactive_insulin">No se puede ingresar una dosis de insulina ya inactiva.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
-    <string name="backup_file">Guardar copia de datos a archivo</string>
+    <string name="backup_file">Copiar datos en archivo</string>
     <string name="backup_file_name">IA_Backup.txt</string>
     <string name="backup_success">"Copia de respaldo de datos realizado con éxito al Archivo:  "</string>
     <string name="backup_fail_permission">No se pudo generar la copia de respaldo de los datos. Verifique los permisos de la aplicación.</string>

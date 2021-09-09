@@ -90,7 +90,7 @@
     <string name="cant_create_inactive_insulin">Sie können keine Insulindosis eingeben, die bereits inaktiv ist.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
-    <string name="backup_file">Kopie der Daten in Datei speichern</string>
+    <string name="backup_file">Daten in Datei kopieren</string>
     <string name="backup_file_name">AI_Backup.txt</string>
     <string name="backup_success">"Erfolgreiche Datensicherung ins Archiv:  "</string>
     <string name="backup_fail_permission">Datensicherung konnte nicht erstellt werden. Überprüfen Sie die Anwendungsberechtigungen.</string>

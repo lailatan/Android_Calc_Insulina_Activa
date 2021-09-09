@@ -90,7 +90,7 @@
     <string name="cant_create_inactive_insulin">You cannot enter an insulin dose that is already inactive.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
-    <string name="backup_file">Save copy of data to file</string>
+    <string name="backup_file">Copy data to file</string>
     <string name="backup_file_name">AI_Backup.txt</string>
     <string name="backup_success">"Successful data backup to Archive: "</string>
     <string name="backup_fail_permission">Data backup could not be generated. Check the application permissions.</string>

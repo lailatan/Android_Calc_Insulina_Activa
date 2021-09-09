@@ -10,7 +10,7 @@
 
     <!-- Color y ancho del borde del elemento -->
     <stroke
-        android:width="10dp"
+        android:width="6dp"
         android:color="@color/purple_200" >
         <!--android:color="@color/borde_pantalla_principal" > -->
     </stroke>

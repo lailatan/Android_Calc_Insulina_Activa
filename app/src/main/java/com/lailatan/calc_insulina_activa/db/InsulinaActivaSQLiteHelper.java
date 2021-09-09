@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.lailatan.calc_insulina_activa.entities.Insulina;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
@@ -143,7 +144,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMNA_ACTIVA,0);
-
+        Log.i("IASQLHelper", "Desactivo IA# " + insulinaActivaId);
         String whereClause = _ID + "=?";
         String[] whereArgs = {insulinaActivaId.toString()};
         db.beginTransaction();
