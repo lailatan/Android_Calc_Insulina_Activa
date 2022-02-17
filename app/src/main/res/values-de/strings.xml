@@ -24,7 +24,7 @@
     <string name="insulin">Insulin: </string>
     <string name="general_data">Allgemeine Daten</string>
     <string name="name">Name: </string>
-    <string name="description">Beschreibung: </string>
+    <string name="description">Beschreibung</string>
     <string name="enter_insulin_descrption"><font size="15">Geben Sie hier die Beschreibung oder relevante Daten des Insulins ein.</font></string>
     <string name="lab">Labor: </string>
     <string name="enter_lab_name"><font size="15">Betreten Sie das Insulinlabor</font></string>
@@ -97,5 +97,17 @@
     <string name="backup_fail_space_or_permission">Die Sicherung konnte nicht erstellt werden. Stellen Sie sicher, dass Sie über Speicherplatz auf dem Gerät und / oder Anwendungsberechtigungen verfügen.</string>
     <string name="backup_file_headers">Insulin;Labor;Einheiten;Dauer;Bewerbungszeit;Beschreibung;</string>
     <string name="backup_path">\"Ein Backup von inaktiven Insulinen wird gespeichert in \"</string>
+    <string name="dose_in">Dosieren:</string>
+    <string name="carbs_grams">Gr. KH:</string>
+    <string name="grams">Gramm:</string>
+    <string name="ratio">Verhältnis:</string>
+    <string name="calculate_dose">Rechne mit KH</string>
+    <string name="food_data">Lebensmittelinformationen</string>
+    <string name="food_data_msg">Geben Sie das Verhältnis und die Kohlenhydrate der Mahlzeit für die Berechnung des Insulinbedarfs ein.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="comments">Bemerkungen</string>
+    <string name="ratio_msg">Das Verhältnis gibt die Menge an Kohlenhydraten pro 1 Einheit Insulin an.\n(Zum Beispiel gibt ein Verhältnis 20 an, dass 1 U alle 20 g CH verwendet wird.)</string>
+    <string name="carbs_msg">Gramm Kohlenhydrate, die in der Nahrung enthalten sind.</string>
 
 </resources>

@@ -24,7 +24,7 @@
     <string name="insulin">Insulin: </string>
     <string name="general_data">General data</string>
     <string name="name">Name: </string>
-    <string name="description">Description: </string>
+    <string name="description">Description</string>
     <string name="enter_insulin_descrption"><font size="15">Enter here a description or relevant data of the insulin.</font></string>
     <string name="lab">Laboratory: </string>
     <string name="enter_lab_name"><font size="15">Enter de insulin lab</font></string>
@@ -97,5 +97,17 @@
     <string name="backup_fail_space_or_permission">The backup could not be generated. Verify that you have storage space on the device and / or application permissions.</string>
     <string name="backup_file_headers">Insulin;Laboratory;Units;Duration;Time;Description;</string>
     <string name="backup_path">\"A backup of inactive insulins will be saved in \"</string>
+    <string name="dose_in">Dose in:</string>
+    <string name="carbs_grams">Gr. CH:</string>
+    <string name="grams">Grams:</string>
+    <string name="ratio">Ratio:</string>
+    <string name="calculate_dose">Calculate with CH</string>
+    <string name="food_data">Food information</string>
+    <string name="food_data_msg">Enter the Ratio and Carbs of the meal for the calculation of insulin needed.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="comments">Comments</string>
+    <string name="ratio_msg">The Ratio indicates the amount of Carbohydrates per 1 Unit of Insulin.\n(For example, a Ratio 20 indicates that 1U is used every 20grCH)</string>
+    <string name="carbs_msg">Grams of Carbohydrates contained in the food.</string>
 
 </resources>

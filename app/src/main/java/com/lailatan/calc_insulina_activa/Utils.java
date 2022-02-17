@@ -372,7 +372,12 @@ public class Utils {
         boolean archivoNuevo=false;
         if (tienePermisoParaArchivos(contexto)) {
             try {
-                String carpeta_backup_path = Environment.getExternalStorageDirectory() + "/" + contexto.getString(R.string.app_name) + "/";
+                //String carpeta_backup_path = Environment.getExternalStorageDirectory() + "/" + contexto.getString(R.string.app_name) + "/";
+                //String carpeta_backup_path = contexto.getExternalFilesDir(null) + "/" + contexto.getString(R.string.app_name) + "/";
+                //String carpeta_backup_path = contexto.getFilesDir() + "/" + contexto.getString(R.string.app_name) + "/";
+
+                String carpeta_backup_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + contexto.getString(R.string.app_name) + "/";
+                String path_usuario = carpeta_backup_path.split("/0/")[1];
                 File carpeta_backup_file = new File(carpeta_backup_path);
 
                 if (!carpeta_backup_file.exists()) carpeta_backup_file.mkdir();
@@ -396,7 +401,7 @@ public class Utils {
                     archivo.flush();
                     archivo.close();
 
-                    mensaje = mensaje + contexto.getString(R.string.backup_success) + " " + contexto.getString(R.string.app_name) + "/" + archivoNombre;
+                    mensaje = mensaje + contexto.getString(R.string.backup_success) + path_usuario + archivoNombre;
                 } else {
                     mensaje = contexto.getString(R.string.backup_fail_permission);
                 }
@@ -409,4 +414,10 @@ public class Utils {
         }
         Toast.makeText(contexto, mensaje, Toast.LENGTH_SHORT).show();
     }
+
+    public static double redondear (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
+
 }

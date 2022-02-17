@@ -3,12 +3,18 @@ package com.lailatan.calc_insulina_activa;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -275,6 +281,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         confirmarYBorrar();
     }
 
+
     private void confirmarYBorrar() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         alertDialog.setMessage(R.string.delete_active_insulin_confirmation);
@@ -323,5 +330,87 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         anioET.setText(String.valueOf(fechaHoraActual.getYear()));
         horaET.setText(String.format("%02d", fechaHoraActual.getHour()));
         minutoET.setText(String.format("%02d", fechaHoraActual.getMinute()));
+    }
+
+
+    public void clickCalcularDosis(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(InsulinaActivaActivity.this);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        View myLayout = inflater.inflate(R.layout.dialog_calcular_dosis, null);
+
+        ((EditText) myLayout.findViewById(R.id.ratioET)).setText(cargarRatio().toString());
+        ((EditText) myLayout.findViewById(R.id.gramosET)).requestFocus();
+
+        builder.setView(myLayout)
+                // Add action buttons
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Dialog f = (Dialog) dialog;
+                        String nuevoRatio = ((EditText) f.findViewById(R.id.ratioET)).getText().toString();
+                        //String nuevoRatio =  ratioET.getText().toString();
+                        Float ratio = 0F;
+                        if (!nuevoRatio.isEmpty()){
+                            ratio=Float.parseFloat((nuevoRatio));
+                            guardarRatio(ratio);
+                        }
+
+                        String nuevoGramos = ((EditText) f.findViewById(R.id.gramosET)).getText().toString();
+                        //String nuevoGramos = gramosET.getText().toString();
+                        Float gramos = 0F;
+                        if (!nuevoGramos.isEmpty()){
+                            gramos=Float.parseFloat((nuevoGramos));
+                        }
+                        CalcularCHInsulina(ratio,gramos);
+
+                        //dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                        dialog.dismiss();
+                    }
+                });
+        builder.setCancelable(true);
+        builder.create();
+        builder.show();
+    }
+
+    //guardar configuración aplicación Android usando SharedPreferences
+    private void guardarRatio(Float ratioNuevo) {
+        SharedPreferences prefs =
+                getSharedPreferences("InsulinaActiva", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat("Ratio", ratioNuevo);
+        editor.commit();
+    }
+
+    //cargar configuración aplicación Android usando SharedPreferences
+    public Float cargarRatio() {
+        SharedPreferences prefs =
+                getSharedPreferences("InsulinaActiva", Context.MODE_PRIVATE);
+        return prefs.getFloat("Ratio", 0);
+    }
+
+    private void CalcularCHInsulina(float ratio, float gramos){
+        Double insulina=0.0;
+        if (!(ratio==0F)){
+            insulina=Utils.redondear(gramos/ratio,1);
+            unidadesET.setText(insulina.toString() + " U");
+        }
+    }
+
+    public void clickConsultaRatio(View view) {
+        Toast toast = Toast.makeText(this,R.string.ratio_msg,Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP|Gravity.LEFT, 100, 100);
+        toast.show();
+    }
+
+    public void clickConsultaGrCH(View view) {
+        Toast toast = Toast.makeText(this,R.string.carbs_msg,Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
+        toast.show();
     }
 }

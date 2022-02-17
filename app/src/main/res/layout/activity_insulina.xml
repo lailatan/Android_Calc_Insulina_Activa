@@ -153,6 +153,13 @@
                                 android:id="@+id/horasRB"/>
                         </RadioGroup>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/LinearLayoutSeccion">
+
+                    <TextView
+                        style="@style/TextViewTitulo"
+                        android:text="@string/description" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -160,9 +167,6 @@
                         android:layout_margin="5dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            style="@style/TextViewIngresoDatos"
-                            android:text="@string/description"/>
 
                         <EditText
                             style="@style/EditTextIngresoDatos"
@@ -177,9 +181,9 @@
                             android:maxLines="20"
                             android:scrollbars="vertical"
                             android:id="@+id/descripcionET" />
-
                     </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

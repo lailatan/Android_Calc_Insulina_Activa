@@ -24,7 +24,7 @@
     <string name="insulin">Insulina: </string>
     <string name="general_data">Datos Generales</string>
     <string name="name">Nombre: </string>
-    <string name="description">Descripción: </string>
+    <string name="description">Descripción</string>
     <string name="enter_insulin_descrption"><font size="15">Ingrese aquí la descripcion o datos relevantes de la insulina.</font></string>
     <string name="lab">Laboratorio: </string>
     <string name="enter_lab_name"><font size="15">Ingrese el laboratorio de la insulina</font></string>
@@ -97,5 +97,17 @@
     <string name="backup_fail_space_or_permission">No se pudo generar la copia de respaldo. Verifique que tenga espacio en almacenamiento en el dispositivo y/o permisos de la aplicación.</string>
     <string name="backup_file_headers">Insulina;Laboratorio;Unidades;Duración;Fecha;Descripción;</string>
     <string name="backup_path">\"Se guardarán un backup de las insulinas inactivas en \"</string>
+    <string name="dose_in">Dosis en:</string>
+    <string name="carbs_grams">Gr. CH:</string>
+    <string name="grams">Gramos:</string>
+    <string name="ratio">Ratio:</string>
+    <string name="calculate_dose">Calcular con CH</string>
+    <string name="food_data">Información de la comida</string>
+    <string name="food_data_msg">Ingrese el Ratio y los Carbohidratos de la comida para el cálculo de insulina necesaria.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
+    <string name="comments">Comentarios</string>
+    <string name="ratio_msg">El Ratio indica la cantidad de CarboHidratos por 1 Unidad de Insulina.\n(Por Ejemplo, un Ratio 20 indica que se utiliza 1U cada 20grCH)</string>
+    <string name="carbs_msg">Gramos de Carbohidratos contenidos en la comida.</string>
 
 </resources>
