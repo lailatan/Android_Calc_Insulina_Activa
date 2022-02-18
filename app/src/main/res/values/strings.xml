@@ -67,6 +67,7 @@
     <string name="duration_separator"> / </string>
     <string name="remain">Quedan: </string>
     <string name="IU">UI</string>
+    <string name="IU_2">UI: </string>
     <string name="app_insulins">Insulinas aplicadas</string>
     <string name="no_insulin_msg">No hay insulinas registradas en la aplicación.\nIngréselas en \'Configuración\' y vuelva a intentarlo.</string>
     <string name="hour">"Hora: "</string>
@@ -109,5 +110,8 @@
     <string name="comments">Comentarios</string>
     <string name="ratio_msg">El Ratio indica la cantidad de CarboHidratos por 1 Unidad de Insulina.\n(Por Ejemplo, un Ratio 20 indica que se utiliza 1U cada 20grCH)</string>
     <string name="carbs_msg">Gramos de Carbohidratos contenidos en la comida.</string>
+    <string name="hide">Ocultar</string>
+    <string name="show">Mostrar</string>
+    <string name="active_total">Total Activo</string>
 
 </resources>

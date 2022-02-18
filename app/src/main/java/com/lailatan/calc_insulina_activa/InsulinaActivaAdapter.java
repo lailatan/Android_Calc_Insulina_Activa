@@ -79,12 +79,12 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
                 if (tiempoRestante > 180) {
                     double valorhoras = Math.round((tiempoRestante / 60.0) * 100.0) / 100.0; //solo 2 decimales
                     String tiempoTxt = context.getString(R.string.hours_short);
-                    tiempoActivaTV.setText(String.format("  %s%s ", Double.toString(valorhoras), tiempoTxt));
+                    tiempoActivaTV.setText(String.format(" %s%s ", Double.toString(valorhoras), tiempoTxt));
                 } else {
                     String tiempoTxt = context.getString(R.string.minutes_short);
-                    tiempoActivaTV.setText(String.format("  %s %s ", tiempoRestante.toString(), tiempoTxt));
+                    tiempoActivaTV.setText(String.format(" %s %s ", tiempoRestante.toString(), tiempoTxt));
                 }
-                unidadesActivaTV.setText(String.format(" %s %s / ", unidadesRestante.toString(), unidadesTxt));
+                unidadesActivaTV.setText(String.format(" %s %s /", unidadesRestante.toString(), unidadesTxt));
                 insulinaActivaLL.setVisibility(View.VISIBLE);
             } else {
                 activaTV.setTextColor(Color.parseColor(context.getString(R.string.color_inactive)));

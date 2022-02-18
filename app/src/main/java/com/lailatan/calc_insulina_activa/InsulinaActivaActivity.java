@@ -404,13 +404,11 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
     public void clickConsultaRatio(View view) {
         Toast toast = Toast.makeText(this,R.string.ratio_msg,Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP|Gravity.LEFT, 100, 100);
         toast.show();
     }
 
     public void clickConsultaGrCH(View view) {
         Toast toast = Toast.makeText(this,R.string.carbs_msg,Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
         toast.show();
     }
 }

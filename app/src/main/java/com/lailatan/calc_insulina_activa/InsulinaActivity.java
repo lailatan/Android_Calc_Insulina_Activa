@@ -231,5 +231,7 @@ public class InsulinaActivity extends AppCompatActivity {
 
         duracionMinET.setVisibility(minutosRB.isChecked() ? View.VISIBLE : View.GONE);
         duracionHorET.setVisibility(horasRB.isChecked() ? View.VISIBLE : View.GONE);
+        if (horasRB.isChecked()) duracionHorET.requestFocus();
+        else  duracionMinET.requestFocus();
     }
 }

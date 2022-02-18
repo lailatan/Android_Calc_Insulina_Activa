@@ -103,8 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 225);
             else {
                 Utils.guardarConfigBackupArchivo(this, true);
-                String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + getString(R.string.app_name) + "/";
-                String path_usuario = path.split("/0/")[1];
+                String path_usuario = Utils.DeterminarPathArchivoSegunVersionAndroidCorto(this);
                 Toast.makeText(this, getString(R.string.backup_path) + path_usuario, Toast.LENGTH_LONG).show();
             }
         }else {

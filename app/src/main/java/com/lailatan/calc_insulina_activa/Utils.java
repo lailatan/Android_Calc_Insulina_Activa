@@ -375,9 +375,9 @@ public class Utils {
                 //String carpeta_backup_path = Environment.getExternalStorageDirectory() + "/" + contexto.getString(R.string.app_name) + "/";
                 //String carpeta_backup_path = contexto.getExternalFilesDir(null) + "/" + contexto.getString(R.string.app_name) + "/";
                 //String carpeta_backup_path = contexto.getFilesDir() + "/" + contexto.getString(R.string.app_name) + "/";
-
-                String carpeta_backup_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + contexto.getString(R.string.app_name) + "/";
-                String path_usuario = carpeta_backup_path.split("/0/")[1];
+                //String carpeta_backup_path = contexto.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + "/" + contexto.getString(R.string.app_name) + "/";
+                String carpeta_backup_path = DeterminarPathArchivoSegunVersionAndroid(contexto);
+                String path_usuario = DeterminarPathArchivoSegunVersionAndroidCorto(contexto);
                 File carpeta_backup_file = new File(carpeta_backup_path);
 
                 if (!carpeta_backup_file.exists()) carpeta_backup_file.mkdir();
@@ -413,6 +413,22 @@ public class Utils {
 
         }
         Toast.makeText(contexto, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+    public static String DeterminarPathArchivoSegunVersionAndroid(Context contexto){
+        String carpeta_backup_path;
+        if (Build.VERSION.SDK_INT> Build.VERSION_CODES.Q) {
+            carpeta_backup_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() ;
+        } else {
+            carpeta_backup_path = Environment.getExternalStorageDirectory().toString();
+        }
+        carpeta_backup_path+=  "/" + contexto.getString(R.string.app_name) + "/";
+        return carpeta_backup_path;
+    }
+
+    public static String DeterminarPathArchivoSegunVersionAndroidCorto(Context contexto){
+        String carpeta_backup_path = DeterminarPathArchivoSegunVersionAndroid(contexto);
+        return carpeta_backup_path.split("/0/")[1];
     }
 
     public static double redondear (double value, int precision) {

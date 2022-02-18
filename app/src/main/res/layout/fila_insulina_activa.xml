@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple_500"
-                android:text="@string/units" />
+                android:text="@string/IU_2" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight=".5"
+            android:layout_weight=".7"
             android:layout_height="match_parent"
             android:gravity="end|bottom"
             android:orientation="horizontal"

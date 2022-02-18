@@ -66,7 +66,8 @@
     <string name="must_enter_valid_date">You must enter a valid date and time. You cannot enter a date in the future or more than 24 hours in the past.</string>
     <string name="duration_separator"> / </string>
     <string name="remain">Remain: </string>
-    <string name="IU">UI</string>
+    <string name="IU">IU</string>
+    <string name="IU_2">IU: </string>
     <string name="app_insulins">Insulins applied</string>
     <string name="no_insulin_msg">There are no insulins registered in the application.\nEnter them in \'Settings\' and try again..</string>
     <string name="hour">"Time: "</string>
@@ -109,5 +110,8 @@
     <string name="comments">Comments</string>
     <string name="ratio_msg">The Ratio indicates the amount of Carbohydrates per 1 Unit of Insulin.\n(For example, a Ratio 20 indicates that 1U is used every 20grCH)</string>
     <string name="carbs_msg">Grams of Carbohydrates contained in the food.</string>
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
+    <string name="active_total">Total active</string>
 
 </resources>

@@ -67,6 +67,7 @@
     <string name="duration_separator"> / </string>
     <string name="remain">Bleiben: </string>
     <string name="IU">IE</string>
+    <string name="IU_2">IE: </string>
     <string name="app_insulins">Insuline angewendet</string>
     <string name="no_insulin_msg">In der Anwendung sind keine Insuline registriert.\nGeben Sie sie in \'Einstellungen\' ein und versuchen Sie es erneut.</string>
     <string name="hour">"Stunde: "</string>
@@ -109,5 +110,8 @@
     <string name="comments">Bemerkungen</string>
     <string name="ratio_msg">Das Verhältnis gibt die Menge an Kohlenhydraten pro 1 Einheit Insulin an.\n(Zum Beispiel gibt ein Verhältnis 20 an, dass 1 U alle 20 g CH verwendet wird.)</string>
     <string name="carbs_msg">Gramm Kohlenhydrate, die in der Nahrung enthalten sind.</string>
+    <string name="hide">Verbergen</string>
+    <string name="show">Show</string>
+    <string name="active_total">Total aktiv</string>
 
 </resources>

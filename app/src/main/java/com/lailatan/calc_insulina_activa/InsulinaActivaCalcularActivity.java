@@ -15,7 +15,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,6 +144,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
                             insulinaLentaTotalTV.setText("");
                             insulinaRapidaTotalTV.setText("");
                             insulinaActivaLV.setAdapter(null);
+                            MostrarTotales(1);
                             insuActivaHelper.eliminarTodasInsulinaActiva();
                             if (Utils.cargarConfigRecibirNotificaciones(InsulinaActivaCalcularActivity.this))
                                 Utils.borrarTodasAlarmasInsulinaActiva(getApplicationContext(), listaDeInsulinaActivas);
@@ -166,11 +169,13 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
             insulinaTotalTV.setText("");
             insulinaLentaTotalTV.setText("");
             insulinaRapidaTotalTV.setText("");
+            MostrarTotales(1);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void clickCalcular(View view) {
+        MostrarTotales(1);
         calcularInsulinaActiva();
     }
 
@@ -208,6 +213,26 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         super.onPause();
         //Toast.makeText(this,  "onPause", Toast.LENGTH_SHORT).show();
         handler.removeCallbacks(runnable);
+    }
+
+    public void clickMostrarTotales(View view) {
+        Utils.hideKeyboard(this);
+        MostrarTotales(Integer.parseInt(((RadioButton)view).getTag().toString()   ));
+    }
+
+    private void MostrarTotales(Integer tag) {
+        LinearLayout tituloLL=findViewById(R.id.tituloLL);
+        LinearLayout tablaLL=findViewById(R.id.tablaLL);
+        if (tag==0) {
+            tituloLL.setVisibility(View.GONE);
+            tablaLL.setVisibility(View.GONE);
+            ((RadioButton)findViewById(R.id.ocultarRB)).setChecked(true);
+
+        } else{
+            tituloLL.setVisibility(View.VISIBLE);
+            tablaLL.setVisibility(View.VISIBLE);
+            ((RadioButton)findViewById(R.id.mostrarRB)).setChecked(true);
+        }
     }
 
 }
