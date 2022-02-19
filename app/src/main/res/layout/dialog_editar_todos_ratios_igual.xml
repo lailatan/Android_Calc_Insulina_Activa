@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        style="@style/LinearLayoutSeccion">
+
+        <TextView
+            style="@style/TextViewTitulo"
+            android:text="@string/ratio_24_hours" />
+
+        <LinearLayout
+            style="@style/LinearLayoutSeccion"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/EditTextIngresoDatos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:text="@string/ratio_24_hours_msg1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.8"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewIngresoDatos"
+                        android:text="@string/ratio"/>
+
+                    <EditText
+                        style="@style/EditTextIngresoDatos"
+                        android:layout_width="wrap_content"
+                        android:selectAllOnFocus="true"
+                        android:imeOptions="actionNext"
+                        android:hint="00.00"
+                        android:maxLength="4"
+                        android:layout_marginRight="5dp"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/ratioET" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/estiloBotonPequeño"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="?"
+                        android:background="@drawable/borde_color_fino"
+                        android:textColor="@color/purple_700"
+                        android:onClick="clickConsultaRatio"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

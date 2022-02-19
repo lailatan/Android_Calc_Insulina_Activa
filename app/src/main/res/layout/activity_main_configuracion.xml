@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".MainConfiguracionActivity"
     android:background="@drawable/borde_color_pleno"
     android:layout_margin="10dp"
     android:gravity="top"
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:textSize="30sp"
             android:textColor="@color/white"
-            android:text="@string/calc_active_insulin" />
+            android:text="@string/config" />
 
     </LinearLayout>
 
@@ -42,26 +42,18 @@
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="10dp"
+        android:onClick="clickRatios"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".6"
-            android:layout_marginRight="10dp"
-            android:onClick="clickCalcularInsuActiva"
-            app:srcCompat="@drawable/insulina_activa" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".4"
+            android:layout_height="match_parent"
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="30sp"
             android:textColor="@color/purple_200"
-            android:onClick="clickCalcularInsuActiva"
-            android:text="@string/calc" />
+            android:text="@string/ratio_ppal" />
     </LinearLayout>
 
 
@@ -83,26 +75,52 @@
         android:layout_margin="5dp"
         android:gravity="center"
         android:padding="10dp"
+        android:onClick="clickInsulinas"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".6"
-            android:layout_marginRight="10dp"
-            android:onClick="clickConfiguracion"
-            app:srcCompat="@drawable/insulina_config" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".4"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="30sp"
             android:textColor="@color/purple_200"
-            android:onClick="clickConfiguracion"
-            android:text="@string/config" />
+            android:text="@string/insulin_title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".02"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/borde_main_botones"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".20"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:onClick="clickCompartitBackup"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/compartirDatosLL">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@color/purple_200"
+            android:text="@string/share_backup" />
     </LinearLayout>
 
     <LinearLayout
@@ -114,6 +132,21 @@
         android:padding="10dp"
         android:orientation="vertical">
 
+        <CheckBox
+            style="@style/EditTextIngresoDatos"
+            android:textColor="@color/white"
+            android:text="@string/receive_notifications"
+            android:checked="false"
+            android:onClick="clickRecibirNotificaciones"
+            android:id="@+id/notificacionesCB"/>
+
+        <CheckBox
+            style="@style/EditTextIngresoDatos"
+            android:textColor="@color/white"
+            android:text="@string/backup_file"
+            android:checked="false"
+            android:onClick="clickGuardarEnArchivo"
+            android:id="@+id/archivoCB"/>
 
     </LinearLayout>
 

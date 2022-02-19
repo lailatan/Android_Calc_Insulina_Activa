@@ -23,8 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
 import com.lailatan.calc_insulina_activa.db.InsulinaSQLiteHelper;
+import com.lailatan.calc_insulina_activa.db.RatioSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.Insulina;
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
+import com.lailatan.calc_insulina_activa.entities.Ratio;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     TextView rapidaTV;
     TextView duracionMinTV;
     TextView duracionHorasTV;
+    TextView textoRatioCHTV;
     EditText insulinaET;
     EditText unidadesET;
     EditText descripcionET;
@@ -65,6 +69,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         anioET=findViewById(R.id.anioET);
         horaET=findViewById(R.id.horaET);
         minutoET=findViewById(R.id.minutoET);
+        textoRatioCHTV=findViewById(R.id.textoRatioCHTV);
 
         Bundle datos = this.getIntent().getExtras();
         InsulinaActiva insulinaActiva = (InsulinaActiva) datos.getSerializable(C_INSULINA_ACTIVA);
@@ -84,6 +89,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                textoRatioCHTV.setText("");
+                textoRatioCHTV.setVisibility(View.GONE);
                 String valor= unidadesET.getText().toString();
                 try{
                     Utils.esNumero(valor, 2, 2, false);
@@ -339,7 +346,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View myLayout = inflater.inflate(R.layout.dialog_calcular_dosis, null);
 
-        ((EditText) myLayout.findViewById(R.id.ratioET)).setText(cargarRatio().toString());
+        //((EditText) myLayout.findViewById(R.id.ratioET)).setText(cargarRatio().toString());
+        ((EditText) myLayout.findViewById(R.id.ratioET)).setText(buscarRatioSegunHora().toString());
         ((EditText) myLayout.findViewById(R.id.gramosET)).requestFocus();
 
         builder.setView(myLayout)
@@ -353,7 +361,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
                         Float ratio = 0F;
                         if (!nuevoRatio.isEmpty()){
                             ratio=Float.parseFloat((nuevoRatio));
-                            guardarRatio(ratio);
+                            //guardarRatio(ratio);
                         }
 
                         String nuevoGramos = ((EditText) f.findViewById(R.id.gramosET)).getText().toString();
@@ -363,7 +371,6 @@ public class InsulinaActivaActivity extends AppCompatActivity {
                             gramos=Float.parseFloat((nuevoGramos));
                         }
                         CalcularCHInsulina(ratio,gramos);
-
                         //dialog.dismiss();
                     }
                 })
@@ -377,6 +384,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         builder.create();
         builder.show();
     }
+
 
     //guardar configuración aplicación Android usando SharedPreferences
     private void guardarRatio(Float ratioNuevo) {
@@ -399,6 +407,11 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         if (!(ratio==0F)){
             insulina=Utils.redondear(gramos/ratio,1);
             unidadesET.setText(insulina.toString() + " U");
+            String texto= "("
+                    + getResources().getString(R.string.carbs_grams) + " " + gramos + " - "
+                    + getResources().getString(R.string.ratio) + " " + ratio + ")";
+            textoRatioCHTV.setText(texto);
+            textoRatioCHTV.setVisibility(View.VISIBLE);
         }
     }
 
@@ -410,5 +423,13 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     public void clickConsultaGrCH(View view) {
         Toast toast = Toast.makeText(this,R.string.carbs_msg,Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    private Double buscarRatioSegunHora(){
+        Integer horaActual = LocalDateTime.now().getHour();
+        RatioSQLiteHelper ratioHelper = new RatioSQLiteHelper(this);
+        Ratio ratioActual = ratioHelper.buscarRatioPorHora(horaActual);
+        ratioHelper.close();
+        return ratioActual.getValor();
     }
 }

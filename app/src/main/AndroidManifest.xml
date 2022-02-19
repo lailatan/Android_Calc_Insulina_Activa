@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lailatan.calc_insulina_activa">
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,20 +13,22 @@
         android:roundIcon="@mipmap/ic_insulin_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainConfiguracionActivity"></activity>
+        <activity android:name=".RatioBuscarActivity" />
         <activity
-            android:name="com.lailatan.calc_insulina_activa.InsulinaActivity"
-            android:parentActivityName=".InsulinaBuscarActivity"/>
+            android:name=".InsulinaActivity"
+            android:parentActivityName=".InsulinaBuscarActivity" />
         <activity
-            android:name="com.lailatan.calc_insulina_activa.InsulinaActivaCalcularActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".InsulinaActivaCalcularActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.lailatan.calc_insulina_activa.InsulinaBuscarActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".InsulinaBuscarActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.lailatan.calc_insulina_activa.InsulinaActivaActivity"
-            android:parentActivityName=".InsulinaActivaCalcularActivity"/>
+            android:name=".InsulinaActivaActivity"
+            android:parentActivityName=".InsulinaActivaCalcularActivity" />
         <activity
-            android:name="com.lailatan.calc_insulina_activa.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/SplashTheme"> <!-- Aquí llamamos nuestro tema -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,12 +36,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".notifications.AlarmBroadcast"/>
-        <receiver android:name=".notifications.BootBroadcast" android:enabled="false">
+
+        <receiver android:name=".notifications.AlarmBroadcast" />
+        <receiver
+            android:name=".notifications.BootBroadcast"
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lailatan.calc_insulina_activa.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
     </application>
 
 </manifest>

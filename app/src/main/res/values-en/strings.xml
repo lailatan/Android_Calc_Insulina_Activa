@@ -70,7 +70,7 @@
     <string name="IU_2">IU: </string>
     <string name="app_insulins">Insulins applied</string>
     <string name="no_insulin_msg">There are no insulins registered in the application.\nEnter them in \'Settings\' and try again..</string>
-    <string name="hour">"Time: "</string>
+    <string name="hour">Time: </string>
     <string name="insulin_title">Insulin</string>
     <string name="cant_delete_in_use_insulin">You cannot delete an Insulin in use.</string>
     <string name="cant_modif_in_use_insulin">You cannot modify an Insulin in use.</string>
@@ -113,5 +113,15 @@
     <string name="hide">Hide</string>
     <string name="show">Show</string>
     <string name="active_total">Total active</string>
+
+    <string name="search_ratio">Search Ratio</string>
+    <string name="hour_ratio">Hour:</string>
+    <string name="ratio_update">Update Ratio</string>
+    <string name="hora_msg">Hour of the day in which the ratio applies. (24h format)</string>
+    <string name="ratio_ppal">Ratio</string>
+    <string name="ratio_24_hours">24h Ratio.</string>
+    <string name="ratio_24_hours_msg1">The Ratio value entered for the 24 hours of the day will be used.</string>
+    <string name="share_backup">Share Data</string>
+    <string name="backup_fail_share">The file could not be shared. Check that it is generated in </string>
 
 </resources>

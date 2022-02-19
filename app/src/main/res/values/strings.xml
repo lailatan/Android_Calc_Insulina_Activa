@@ -70,7 +70,7 @@
     <string name="IU_2">UI: </string>
     <string name="app_insulins">Insulinas aplicadas</string>
     <string name="no_insulin_msg">No hay insulinas registradas en la aplicación.\nIngréselas en \'Configuración\' y vuelva a intentarlo.</string>
-    <string name="hour">"Hora: "</string>
+    <string name="hour">Hora: </string>
     <string name="insulin_title">Insulina</string>
     <string name="cant_delete_in_use_insulin">No puede eliminar una Insulina en uso.</string>
     <string name="cant_modif_in_use_insulin">No puede modificar una Insulina en uso.</string>
@@ -113,5 +113,15 @@
     <string name="hide">Ocultar</string>
     <string name="show">Mostrar</string>
     <string name="active_total">Total Activo</string>
+
+    <string name="search_ratio">Buscar Ratio</string>
+    <string name="hour_ratio">Hora:</string>
+    <string name="ratio_update">Modificar Ratio</string>
+    <string name="hora_msg">Hora del día en que aplica el ratio. (Formato 24hs)</string>
+    <string name="ratio_ppal">Ratio</string>
+    <string name="ratio_24_hours">Ratio 24hs.</string>
+    <string name="ratio_24_hours_msg1">Se utilizará el valor de Ratio ingresado para las 24 horas del día.</string>
+    <string name="share_backup">Compartir Datos</string>
+    <string name="backup_fail_share">No se pudo compartir el archivo. Verifique que esté generado en </string>
 
 </resources>

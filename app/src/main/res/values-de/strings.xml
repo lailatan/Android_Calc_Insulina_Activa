@@ -15,7 +15,7 @@
     <string name="not_found">Keine Daten gefunden.</string>
     <string name="not_found_insulin">Es sind keine Insulindosen eingegeben.</string>
     <string name="config">Einstellung</string>
-    <string name="search_insulin">Suche insulina</string>
+    <string name="search_insulin">Insulin finden</string>
     <string name="search_criterial">Suchkriterium</string>
     <string name="enter_insulin_name"><font size="15">Geben Sie den Namen des Insulins ein</font></string>
     <string name="search">Suchen</string>
@@ -70,7 +70,7 @@
     <string name="IU_2">IE: </string>
     <string name="app_insulins">Insuline angewendet</string>
     <string name="no_insulin_msg">In der Anwendung sind keine Insuline registriert.\nGeben Sie sie in \'Einstellungen\' ein und versuchen Sie es erneut.</string>
-    <string name="hour">"Stunde: "</string>
+    <string name="hour">Stunde: </string>
     <string name="insulin_title">Insulin</string>
     <string name="cant_delete_in_use_insulin">Sie können kein Insulin in Gebrauch löschen.</string>
     <string name="cant_modif_in_use_insulin">Sie können ein verwendetes Insulin nicht ändern.</string>
@@ -113,5 +113,15 @@
     <string name="hide">Verbergen</string>
     <string name="show">Show</string>
     <string name="active_total">Total aktiv</string>
+
+    <string name="search_ratio">Verhältnis finden</string>
+    <string name="hour_ratio">Stunde:</string>
+    <string name="ratio_update">Verhältnis ändern</string>
+    <string name="hora_msg">Stunde des Tages, in der das Verhältnis gilt. (24-Stunden-Format)</string>
+    <string name="ratio_ppal">Verhältnis</string>
+    <string name="ratio_24_hours">24Std Verhältnis.</string>
+    <string name="ratio_24_hours_msg1">Der für die 24 Stunden des Tages eingegebene Verhältniswert wird verwendet.</string>
+    <string name="share_backup">Daten teilen</string>
+    <string name="backup_fail_share">Die Datei konnte nicht geteilt werden. Überprüfen Sie, ob es in generiert wurde </string>
 
 </resources>

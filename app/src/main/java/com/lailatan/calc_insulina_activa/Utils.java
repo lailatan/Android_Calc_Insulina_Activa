@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -24,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.lailatan.calc_insulina_activa.entities.InsulinaActiva;
 import com.lailatan.calc_insulina_activa.notifications.AlarmBroadcast;
@@ -45,6 +47,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import static android.content.Context.ALARM_SERVICE;
@@ -434,6 +437,42 @@ public class Utils {
     public static double redondear (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
+    }
+
+    public static void sendFile(Context context) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/*");
+
+        String archivoNombre=context.getString(R.string.backup_file_name);
+        String carpeta_backup_path = DeterminarPathArchivoSegunVersionAndroid(context);
+
+        String dirpath = carpeta_backup_path + archivoNombre;
+
+        try{
+            File file = new File(dirpath);
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            //intent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getString(R.string.tarot_cards));
+            intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "TEMA");
+            intent.putExtra(android.content.Intent.EXTRA_TEXT, "titulo");
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    context.grantUriPermission(packageName,uri , Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }
+            }
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            String carpeta_backup = DeterminarPathArchivoSegunVersionAndroidCorto(context) + archivoNombre;
+            String mensaje = context.getString(R.string.backup_fail_share) + carpeta_backup + ".";
+            Toast.makeText(context, mensaje, Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
 }

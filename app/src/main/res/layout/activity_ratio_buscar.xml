@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RatioBuscarActivity"
+    android:layout_margin="5dp"
+    android:background="@drawable/borde_color_fondo_oscuro"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/LinearLayoutNombrePantalla">
+
+
+        <TextView
+            style="@style/TextViewNombrePantalla"
+            android:text="@string/search_ratio" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".14"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/insulina_contraste"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/borde_color_fino">
+
+                <ListView
+                    style="@style/ListViewGeneral"
+                    android:id="@+id/ratioListaLV"/>
+
+                <TextView
+                    style="@style/TextViewIngresoDatos"
+                    android:padding="10dp"
+                    android:layout_marginBottom="200dp"
+                    android:id="@+id/view_vacio"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABIzquierda"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickVolver"
+            android:id="@+id/cancelFAB"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABDerecha"
+            android:src="@drawable/ic_24horas"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickUnSoloRatio"
+            android:id="@+id/AddFAB"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
