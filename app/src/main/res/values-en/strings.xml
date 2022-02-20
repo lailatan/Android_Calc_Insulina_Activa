@@ -123,5 +123,10 @@
     <string name="ratio_24_hours_msg1">The Ratio value entered for the 24 hours of the day will be used.</string>
     <string name="share_backup">Share Data</string>
     <string name="backup_fail_share">The file could not be shared. Check that it is generated in </string>
+    <string name="ratio_range_hours_msg">The ratio entered in the indicated hour interval will be used.</string>
+    <string name="from_hour">From:</string>
+    <string name="to_hour">To:</string>
+    <string name="ratio_range_hours">Interval Ratio</string>
+    <string name="invalid_range">Invalid time interval.</string>
 
 </resources>

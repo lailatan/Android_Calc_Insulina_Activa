@@ -66,11 +66,18 @@
             android:id="@+id/cancelFAB"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            style="@style/FABCentro"
+            android:src="@drawable/ic_range_hours"
+            app:backgroundTint="@color/purple_200"
+            android:onClick="clickRangoRatio"
+            android:id="@+id/rangoRatioFAB"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             style="@style/FABDerecha"
-            android:src="@drawable/ic_24horas"
+            android:src="@drawable/ic_24_horas"
             app:backgroundTint="@color/purple_200"
             android:onClick="clickUnSoloRatio"
-            android:id="@+id/AddFAB"/>
+            android:id="@+id/unSoloRatioFAB"/>
 
     </RelativeLayout>
 

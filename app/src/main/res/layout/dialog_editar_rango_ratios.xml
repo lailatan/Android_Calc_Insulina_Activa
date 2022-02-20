@@ -8,7 +8,7 @@
 
         <TextView
             style="@style/TextViewTitulo"
-            android:text="@string/ratio_24_hours" />
+            android:text="@string/ratio_range_hours" />
 
         <LinearLayout
             style="@style/LinearLayoutSeccion"
@@ -17,8 +17,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -26,7 +25,44 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:text="@string/ratio_24_hours_msg1"/>
+                    android:text="@string/ratio_range_hours_msg"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewIngresoDatos"
+                    android:text="@string/from_hour"/>
+                <Spinner
+                    android:imeOptions="actionNext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/hora_desdeSP"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    style="@style/TextViewIngresoDatos"
+                    android:text="@string/to_hour"/>
+                <Spinner
+                    android:imeOptions="actionNext"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:id="@+id/hora_hastaSP"/>
             </LinearLayout>
 
             <LinearLayout

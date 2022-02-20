@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.lailatan.calc_insulina_activa.db.RatioSQLiteHelper;
 import com.lailatan.calc_insulina_activa.entities.Insulina;
 import com.lailatan.calc_insulina_activa.entities.Ratio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RatioBuscarActivity extends AppCompatActivity {
@@ -170,4 +173,85 @@ public class RatioBuscarActivity extends AppCompatActivity {
         builder.create();
         builder.show();
     }
+
+    public void clickRangoRatio(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RatioBuscarActivity.this);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        View myLayout = inflater.inflate(R.layout.dialog_editar_rango_ratios, null);
+
+        ((EditText) myLayout.findViewById(R.id.ratioET)).requestFocus();
+        Spinner hora_desdeSP = ((Spinner) myLayout.findViewById(R.id.hora_desdeSP));
+        Spinner hora_hastaSP = ((Spinner) myLayout.findViewById(R.id.hora_hastaSP));
+        llenarSpinners(hora_desdeSP,hora_hastaSP);
+
+        builder.setView(myLayout)
+                // Add action buttons
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        Dialog f = (Dialog) dialog;
+                        String nuevoRatio = ((EditText) f.findViewById(R.id.ratioET)).getText().toString();
+                        //String nuevoRatio =  ratioET.getText().toString();
+                        Double valor=(!nuevoRatio.isEmpty())?Double.parseDouble((nuevoRatio)):0;
+                        Long nuevaHoraDesde = ((Spinner) f.findViewById(R.id.hora_desdeSP)).getSelectedItemId();
+                        Long nuevaHoraHasta = ((Spinner) f.findViewById(R.id.hora_hastaSP)).getSelectedItemId();
+                        guardarRangoRatio(valor, nuevaHoraDesde.intValue(), nuevaHoraHasta.intValue());
+                        BuscarRatios();
+                        //dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                        dialog.dismiss();
+                    }
+                });
+        builder.setCancelable(true);
+        builder.create();
+        builder.show();
+    }
+
+    private void guardarRangoRatio(Double valor, Integer horaDesde, Integer horaHasta) {
+        RatioSQLiteHelper ratioHelper = new RatioSQLiteHelper(this);
+        ratioHelper.actualizarRangoRatiosIgual(valor,horaDesde,horaHasta);
+        ratioHelper.close();
+    }
+
+    private void llenarSpinners(Spinner hora_desdeSP, Spinner hora_hastaSP) {
+        List<String> items = new ArrayList<>();
+        for (int i=0;i<24;i++){
+            items.add(String.format("%02d:00",i));
+        }
+
+        hora_desdeSP.setAdapter(new ArrayAdapter<String>(this, R.layout.ratio_spinner_item, items));
+        hora_desdeSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get the spinner selected item text
+                //String selectedItemText = (String) adapterView.getItemAtPosition(i);
+                //limpiarResultado();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //Toast.makeText(mContext,"No selection",Toast.LENGTH_LONG).show();
+            }
+        });
+        hora_hastaSP.setAdapter(new ArrayAdapter<String>(this, R.layout.ratio_spinner_item, items));
+        hora_hastaSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get the spinner selected item text
+                //String selectedItemText = (String) adapterView.getItemAtPosition(i);
+                //limpiarResultado();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //Toast.makeText(mContext,"No selection",Toast.LENGTH_LONG).show();
+            }
+        });
+        hora_desdeSP.setSelection(0);
+        hora_hastaSP.setSelection(23);
+    }
+
 }

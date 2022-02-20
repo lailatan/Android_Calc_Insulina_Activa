@@ -123,5 +123,10 @@
     <string name="ratio_24_hours_msg1">Der für die 24 Stunden des Tages eingegebene Verhältniswert wird verwendet.</string>
     <string name="share_backup">Daten teilen</string>
     <string name="backup_fail_share">Die Datei konnte nicht geteilt werden. Überprüfen Sie, ob es in generiert wurde </string>
+    <string name="ratio_range_hours_msg">Das im angezeigten Stundenintervall eingegebene Verhältnis wird verwendet.</string>
+    <string name="from_hour">Von:</string>
+    <string name="to_hour">Bis:</string>
+    <string name="ratio_range_hours">Intervallverhältnis</string>
+    <string name="invalid_range">Ungültiges Zeitintervall.</string>
 
 </resources>

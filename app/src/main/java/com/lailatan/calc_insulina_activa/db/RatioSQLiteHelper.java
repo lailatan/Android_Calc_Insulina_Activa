@@ -179,4 +179,22 @@ public class RatioSQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void actualizarRangoRatiosIgual(Double valor, Integer horaDesde, Integer horaHasta) {
+        SQLiteDatabase db = getWritableDatabase();
+
+//        for (Integer i=horaDesde; i<=horaHasta;i++) {
+        if (horaHasta < horaDesde) {
+            for (Integer i=horaDesde; i<=23;i++) {
+                guardarRatio(new Ratio(i+1,i,valor));
+            }
+            for (Integer i = 0; i <= horaHasta; i++) {
+                guardarRatio(new Ratio(i + 1, i, valor));
+            }
+        }else{
+            for (Integer i=horaDesde; i<=horaHasta;i++) {
+                guardarRatio(new Ratio(i+1,i,valor));
+            }
+
+        }
+    }
 }
