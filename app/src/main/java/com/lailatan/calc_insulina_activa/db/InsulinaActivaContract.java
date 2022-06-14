@@ -21,6 +21,7 @@ public class InsulinaActivaContract {
         public final static String COLUMNA_MINUTO_DESDE = "minuto_desde";
         public final static String COLUMNA_ACTIVA = "activa";
         public final static String COLUMNA_DESCRIPCION = "descripcion";
+        public final static String COLUMNA_MANUAL = "manual";
 
     }
 }

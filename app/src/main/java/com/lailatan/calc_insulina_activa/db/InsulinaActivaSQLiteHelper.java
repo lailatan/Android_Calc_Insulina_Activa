@@ -16,7 +16,7 @@ import static com.lailatan.calc_insulina_activa.db.InsulinaActivaContract.Insuli
 
 public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
     private static final String NOMBRE_DB = "insulinaactiva.db";
-    private static final int VERSION_DB = 1;
+    private static final int VERSION_DB = 2;
     private final Context contexto;
 
     public InsulinaActivaSQLiteHelper(Context context){
@@ -38,13 +38,17 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
                 + COLUMNA_HORA_DESDE + " INTEGER NOT NULL,"
                 + COLUMNA_MINUTO_DESDE + " INTEGER NOT NULL,"
                 + COLUMNA_ACTIVA + " INTEGER NOT NULL DEFAULT 1,"
-                + COLUMNA_DESCRIPCION + " TEXT"
+                + COLUMNA_DESCRIPCION + " TEXT ,"
+                + COLUMNA_MANUAL + " INTEGER NOT NULL DEFAULT 1"
                 + ");";
         db.execSQL(SQL_CREAR_TABLA_INSULINAS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String SQL_ADD_COLUMN_TABLA_INSULINAS = "ALTER TABLE " + NOMBRE_TABLA
+                + " ADD COLUMN " + COLUMNA_MANUAL + " INTEGER NOT NULL DEFAULT 1;";
+        db.execSQL(SQL_ADD_COLUMN_TABLA_INSULINAS);
     }
 
     public ArrayList<InsulinaActiva> buscarInsulinaActivas(boolean soloActivas) {
@@ -62,7 +66,8 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
                 COLUMNA_HORA_DESDE,
                 COLUMNA_MINUTO_DESDE,
                 COLUMNA_ACTIVA,
-                COLUMNA_DESCRIPCION
+                COLUMNA_DESCRIPCION,
+                COLUMNA_MANUAL
         };
 
             String whereClause = soloActivas?COLUMNA_ACTIVA + "=?":null;
@@ -85,6 +90,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
             int columnaMinutoIndex = cursor.getColumnIndex(COLUMNA_MINUTO_DESDE);
             int columnaActivaIndex = cursor.getColumnIndex(COLUMNA_ACTIVA);
             int columnaDescripcionIndex = cursor.getColumnIndex(COLUMNA_DESCRIPCION);
+            int columnaManualIndex = cursor.getColumnIndex(COLUMNA_MANUAL);
 
             //itero el por el indice hata que Move next sea false que es cuando llegue al ultimo
             while (cursor.moveToNext()){
@@ -98,11 +104,12 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
                 Integer minutoActual = cursor.getInt(columnaMinutoIndex);
                 Integer activaActual = cursor.getInt(columnaActivaIndex);
                 String descripcionActual = cursor.getString(columnaDescripcionIndex);
+                Integer manualActual = cursor.getInt(columnaManualIndex);
 
 
                 Insulina insulina=insulinaHelper.buscarInsulinaPorId(insulinaIdActual);
                 insulinaActivas.add(new InsulinaActiva(idActual,insulina,unidadesActual,
-                        diaActual,mesActual,anioActual,horaActual,minutoActual,activaActual,descripcionActual));
+                        diaActual,mesActual,anioActual,horaActual,minutoActual,activaActual,descripcionActual,manualActual));
             }
         } finally {
             //cierro cursor
@@ -125,6 +132,7 @@ public class InsulinaActivaSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMNA_MINUTO_DESDE,insulinaActiva.getMinuto_desde());
         values.put(COLUMNA_ACTIVA,insulinaActiva.getActiva());
         values.put(COLUMNA_DESCRIPCION,insulinaActiva.getDescripcion());
+        values.put(COLUMNA_MANUAL,insulinaActiva.getAplicacionManual());
 
         if (insulinaActiva.getInsulina_activa_id()!=0) {
             String whereClause = _ID + "=?";

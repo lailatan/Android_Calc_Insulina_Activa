@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lailatan.calc_insulina_activa.db.InsulinaActivaSQLiteHelper;
@@ -51,6 +52,9 @@ public class InsulinaActivaActivity extends AppCompatActivity {
     EditText anioET;
     EditText horaET;
     EditText minutoET;
+    RadioButton apManualRB;
+    RadioButton apInfusorRB;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -64,6 +68,8 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         insulinaET=findViewById(R.id.insulinaET);
         unidadesET=findViewById(R.id.unidadesET);
         descripcionET=findViewById(R.id.descripcionET);
+        apManualRB=findViewById(R.id.apManualRB);
+        apInfusorRB=findViewById(R.id.apInfusorRB);
         diaET=findViewById(R.id.diaET);
         mesET=findViewById(R.id.mesET);
         anioET=findViewById(R.id.anioET);
@@ -108,6 +114,7 @@ public class InsulinaActivaActivity extends AppCompatActivity {
         cargarDatosInsulina(insulinaActiva.getInsulina());
         unidadesET.setText(String.valueOf(insulinaActiva.getUnidades()));
         descripcionET.setText(insulinaActiva.getDescripcion());
+        apInfusorRB.setChecked(insulinaActiva.getAplicacionManual()==0);
         diaET.setText(String.format("%02d", insulinaActiva.getDia_desde()));
         mesET.setText(String.format("%02d", insulinaActiva.getMes_desde()));
         anioET.setText(String.valueOf(insulinaActiva.getAnio_desde()));
@@ -194,10 +201,11 @@ public class InsulinaActivaActivity extends AppCompatActivity {
             Integer hora = Integer.valueOf(horaET.getText().toString());
             Integer minuto = Integer.valueOf(minutoET.getText().toString());
             String descripcion = descripcionET.getText().toString();
+            Integer apManual = apManualRB.isChecked() ? 1 : 0;
             Integer activa = 1;
 
             InsulinaActiva insulinaActivaActual = new InsulinaActiva(insulinaActivaId,insulinaAplicada,unidades,
-                    dia,mes,anio,hora,minuto,activa,descripcion);
+                    dia,mes,anio,hora,minuto,activa,descripcion,apManual);
 
             Long tiempoRestante = insulinaActivaActual.calcularTiempoQueRestaActivayDesactivar(this);
 

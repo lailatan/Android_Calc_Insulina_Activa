@@ -23,11 +23,12 @@ public class InsulinaActiva implements Serializable {
     private Integer minuto_desde;
     private Integer activa;
     private String descripcion;
+    private Integer aplicacionManual;
 
     public InsulinaActiva() {
     }
 
-    public InsulinaActiva(Insulina insulina, Double unidades, Integer dia_desde, Integer mes_desde, Integer anio_desde, Integer hora_desde, Integer minuto_desde, Integer activa, String descripcion) {
+    public InsulinaActiva(Insulina insulina, Double unidades, Integer dia_desde, Integer mes_desde, Integer anio_desde, Integer hora_desde, Integer minuto_desde, Integer activa, String descripcion, Integer aplicacionManual) {
         this.insulina_activa_id = 0;
         this.insulina = insulina;
         this.unidades = unidades;
@@ -38,9 +39,10 @@ public class InsulinaActiva implements Serializable {
         this.minuto_desde = minuto_desde;
         this.activa = activa;
         this.descripcion = descripcion;
+        this.aplicacionManual = aplicacionManual;
     }
 
-    public InsulinaActiva(Integer insulina_activa_id, Insulina insulina, Double unidades, Integer dia_desde, Integer mes_desde, Integer anio_desde, Integer hora_desde, Integer minuto_desde, Integer activa, String descripcion) {
+    public InsulinaActiva(Integer insulina_activa_id, Insulina insulina, Double unidades, Integer dia_desde, Integer mes_desde, Integer anio_desde, Integer hora_desde, Integer minuto_desde, Integer activa, String descripcion,Integer aplicacionManual) {
         this.insulina_activa_id = insulina_activa_id;
         this.insulina = insulina;
         this.unidades = unidades;
@@ -51,6 +53,7 @@ public class InsulinaActiva implements Serializable {
         this.minuto_desde = minuto_desde;
         this.activa = activa;
         this.descripcion = descripcion;
+        this.aplicacionManual = aplicacionManual;
     }
 
     public Integer getInsulina_activa_id() {
@@ -131,6 +134,14 @@ public class InsulinaActiva implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getAplicacionManual() {
+        return aplicacionManual;
+    }
+
+    public void setAplicacionManual(Integer aplicacionManual) {
+        this.aplicacionManual = aplicacionManual;
     }
 
     @Override

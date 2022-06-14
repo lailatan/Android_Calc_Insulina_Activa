@@ -6,6 +6,7 @@
     <string name="calc_active_insulin">Cálculo de Insulina Activa</string>
     <string name="clean">Limpiar</string>
     <string name="erase_data">Borrar datos</string>
+    <string name="store_data">Archivar datos</string>
     <string name="calc">Calcular</string>
     <string name="units">Unidades: </string>
     <string name="duration_minutes">Duración (min): </string>
@@ -25,7 +26,7 @@
     <string name="general_data">Datos Generales</string>
     <string name="name">Nombre: </string>
     <string name="description">Descripción</string>
-    <string name="enter_insulin_descrption"><font size="15">Ingrese aquí la descripcion o datos relevantes de la insulina.</font></string>
+    <string name="enter_insulin_descrption"><font size="15">Ingrese aquí la descripción o datos relevantes de la insulina.</font></string>
     <string name="lab">Laboratorio: </string>
     <string name="enter_lab_name"><font size="15">Ingrese el laboratorio de la insulina</font></string>
     <string name="quick_action">Acción Rápida</string>
@@ -43,7 +44,9 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="delete_all_inactive_insulin_confirmation">¿Desea borrar todas las insulinas inactivas ingresadas?</string>
-    <string name="delete_all_stores_inactive_insulin_confirmation">Hay muchas insulinas inactivas guardadas. ¿Desea borrarlas para agilizar la aplicación?</string>
+    <string name="store_all_inactive_insulin_confirmation">¿Desea archivar todas las insulinas inactivas ingresadas?</string>
+    <string name="delete_all_stores_inactive_insulin_confirmation">Hay muchas insulinas inactivas. ¿Desea borrarlas para agilizar la aplicación?</string>
+    <string name="store_all_stores_inactive_insulin_confirmation">Hay muchas insulinas inactivas. ¿Desea archivarlas para agilizar la aplicación?</string>
     <string name="insulin_active_data">Datos de la insulina aplicada </string>
     <string name="select_insuline"><font size="15">Seleccione una insulina</font></string>
     <string name="units_applied">Unidades aplicadas: </string>
@@ -91,13 +94,13 @@
     <string name="cant_create_inactive_insulin">No se puede ingresar una dosis de insulina ya inactiva.</string>
     <string name="color_active">#39a127</string>
     <string name="color_inactive">#ff0000</string>
-    <string name="backup_file">Copiar datos en archivo</string>
+    <string name="backup_file">Archivar datos en archivo</string>
     <string name="backup_file_name">IA_Backup.txt</string>
-    <string name="backup_success">"Copia de respaldo de datos realizado con éxito al Archivo:  "</string>
+    <string name="backup_success">Copia de respaldo de datos realizado con éxito al Archivo:  </string>
     <string name="backup_fail_permission">No se pudo generar la copia de respaldo de los datos. Verifique los permisos de la aplicación.</string>
     <string name="backup_fail_space_or_permission">No se pudo generar la copia de respaldo. Verifique que tenga espacio en almacenamiento en el dispositivo y/o permisos de la aplicación.</string>
-    <string name="backup_file_headers">Insulina;Laboratorio;Unidades;Duración;Fecha;Descripción;</string>
-    <string name="backup_path">\"Se guardarán un backup de las insulinas inactivas en \"</string>
+    <string name="backup_file_headers">Insulina;Laboratorio;Unidades;Duración;Fecha;Descripción;Modo Aplicación;</string>
+    <string name="backup_path">\Se guardarán un backup de las insulinas inactivas en \</string>
     <string name="dose_in">Dosis en:</string>
     <string name="carbs_grams">Gr. CH:</string>
     <string name="grams">Gramos:</string>
@@ -128,5 +131,8 @@
     <string name="to_hour">Hasta:</string>
     <string name="ratio_range_hours">Ratio en Intervalo</string>
     <string name="invalid_range">Intervalo de tiempo inválido.</string>
+    <string name="application">Aplicación: </string>
+    <string name="manual">Manual</string>
+    <string name="pump">Infusor</string>
 
 </resources>

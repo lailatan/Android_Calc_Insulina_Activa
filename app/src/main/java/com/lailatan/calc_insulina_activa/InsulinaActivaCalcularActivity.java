@@ -34,6 +34,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private static final String C_INSULINA_ACTIVA = "insulina_activa";
+    private Boolean hacerBackup;
     InsulinaActivaAdapter insuActivaAdapter;
     ArrayList<InsulinaActiva> listaDeInsulinaActivas;
     ListView insulinaActivaLV;
@@ -42,7 +43,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     TextView insulinaTotalTV;
     TextView insulinaRapidaTotalTV;
     TextView insulinaLentaTotalTV;
-
+    TextView limpiarBT;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -54,11 +55,18 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
         insulinaTotalTV=findViewById(R.id.insulinaTotalTV);
         insulinaRapidaTotalTV=findViewById(R.id.insulinaRapidaTotalTV);
         insulinaLentaTotalTV=findViewById(R.id.insulinaLentaTotalTV);
+        limpiarBT=findViewById(R.id.limpiarBT);
         vacioTV=findViewById(R.id.vacioTV);
 
+        configurarBackup();
         calcularInsulinaActiva();
         borrarInsuActivayControles(true,false);
 
+    }
+
+    private void configurarBackup() {
+        hacerBackup = Utils.cargarConfigBackupArchivo(InsulinaActivaCalcularActivity.this);
+        limpiarBT.setText(getString(hacerBackup ? R.string.store_data: R.string.erase_data));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -114,14 +122,20 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     }
 
     private void borrarInsuActivayControles(boolean soloInactivas, boolean porEleccionUsuario) {
+        String mensaje="";
         InsulinaActivaSQLiteHelper insuActivaHelper = new InsulinaActivaSQLiteHelper(this);
         Integer cantidadInactivas = insuActivaHelper.buscarCantidadInsulinasActivas(false,true);
         insuActivaHelper.close();
-        Log.i("InsulinaActivaCalcular","Insulinas inactivas --> " + cantidadInactivas.toString());
+        //Log.i("InsulinaActivaCalcular","Insulinas inactivas --> " + cantidadInactivas.toString());
 
         if (cantidadInactivas>C_TOPE_INACTIVAS||(cantidadInactivas>0 && porEleccionUsuario)) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-            String mensaje = getString(porEleccionUsuario ? R.string.delete_all_inactive_insulin_confirmation : R.string.delete_all_stores_inactive_insulin_confirmation);
+            if (hacerBackup){
+                mensaje = getString(porEleccionUsuario ? R.string.store_all_inactive_insulin_confirmation : R.string.store_all_stores_inactive_insulin_confirmation);
+
+            }else {
+                mensaje = getString(porEleccionUsuario ? R.string.delete_all_inactive_insulin_confirmation : R.string.delete_all_stores_inactive_insulin_confirmation);
+            }
             alertDialog.setMessage(mensaje);
             alertDialog.setTitle(R.string.delete);
             alertDialog.setIcon(R.drawable.ic_question);
@@ -130,7 +144,6 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
 
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 public void onClick(DialogInterface dialog, int which) {
-                    boolean hacerBackup = Utils.cargarConfigBackupArchivo(InsulinaActivaCalcularActivity.this);
                     boolean tienePermiso = hacerBackup && Utils.tienePermisoParaArchivos(InsulinaActivaCalcularActivity.this);
                     if ((!hacerBackup) || (hacerBackup && tienePermiso)) {
                         if (hacerBackup) Utils.escribirEnArchivo(InsulinaActivaCalcularActivity.this, listaDeInsulinaActivas);
@@ -194,6 +207,7 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         calcularInsulinaActiva();
+        configurarBackup();
 
         handler = new Handler(Looper.getMainLooper());
         runnable = new Runnable(){

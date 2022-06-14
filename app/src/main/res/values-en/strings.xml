@@ -6,6 +6,7 @@
     <string name="calc_active_insulin">Active Insulin Calculation</string>
     <string name="clean">Clean</string>
     <string name="erase_data">Delete data</string>
+    <string name="store_data">Store data</string>
     <string name="calc">Calculate</string>
     <string name="units">Units: </string>
     <string name="duration_minutes">Duration (min): </string>
@@ -43,7 +44,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete_all_inactive_insulin_confirmation">Do you want to delete all inactive insulins entered?</string>
-    <string name="delete_all_stores_inactive_insulin_confirmation">There are many inactive insulins stored. Do you want to delete them to speed up the application?</string>
+    <string name="store_all_inactive_insulin_confirmation">Do you want to store all inactive insulins entered?</string>
+    <string name="delete_all_stores_inactive_insulin_confirmation">There are many inactive insulins. Do you want to delete them to speed up the application?</string>
+    <string name="store_all_stores_inactive_insulin_confirmation">There are many inactive insulins. Do you want to store them to speed up the application?</string>
     <string name="insulin_active_data">Insulin data applied</string>
     <string name="select_insuline"><font size="15">Select an insulin</font></string>
     <string name="units_applied">Applied Units: </string>
@@ -93,11 +96,11 @@
     <string name="color_inactive">#ff0000</string>
     <string name="backup_file">Copy data to file</string>
     <string name="backup_file_name">AI_Backup.txt</string>
-    <string name="backup_success">"Successful data backup to Archive: "</string>
+    <string name="backup_success">Successful data backup to Archive: </string>
     <string name="backup_fail_permission">Data backup could not be generated. Check the application permissions.</string>
     <string name="backup_fail_space_or_permission">The backup could not be generated. Verify that you have storage space on the device and / or application permissions.</string>
-    <string name="backup_file_headers">Insulin;Laboratory;Units;Duration;Time;Description;</string>
-    <string name="backup_path">\"A backup of inactive insulins will be saved in \"</string>
+    <string name="backup_file_headers">Insulin;Laboratory;Units;Duration;Time;Description;Application mode;</string>
+    <string name="backup_path">A backup of inactive insulins will be saved in \</string>
     <string name="dose_in">Dose in:</string>
     <string name="carbs_grams">Gr. CH:</string>
     <string name="grams">Grams:</string>
@@ -128,5 +131,8 @@
     <string name="to_hour">To:</string>
     <string name="ratio_range_hours">Interval Ratio</string>
     <string name="invalid_range">Invalid time interval.</string>
+    <string name="application">Application: </string>
+    <string name="manual">Manual</string>
+    <string name="pump">Pump</string>
 
 </resources>

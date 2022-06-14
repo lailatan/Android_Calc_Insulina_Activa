@@ -395,7 +395,10 @@ public class Utils {
                     //for (InsulinaActiva insulinaActiva : listaDeInsulinaActivas)
                     //    if (insulinaActiva.getActiva() == 0) texto += insulinaActiva.toString() + "\n";
                     for (int i= listaDeInsulinaActivas.size()-1; i>=0 ; i--)
-                        if (listaDeInsulinaActivas.get(i).getActiva() == 0) texto += listaDeInsulinaActivas.get(i).toString() + "\n";
+                        if (listaDeInsulinaActivas.get(i).getActiva() == 0) {
+                            String modo = "'" + contexto.getString(listaDeInsulinaActivas.get(i).getAplicacionManual()==1 ? R.string.manual: R.string.pump) + "';";
+                            texto += listaDeInsulinaActivas.get(i).toString() + modo +  "\n";
+                        }
 
 
                     FileWriter archivo = new FileWriter(backupDB, true);

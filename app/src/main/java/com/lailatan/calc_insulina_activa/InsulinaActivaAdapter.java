@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
 
         InsulinaActiva insuActivaActual = getItem(position);
 
+        ImageView aplicacionIV = ItemLista.findViewById(R.id.aplicacionIV);
         TextView nombreInsulinaTV = ItemLista.findViewById(R.id.nombreInsulinaTV);
         TextView unidadesTV = ItemLista.findViewById(R.id.unidadesTV);
         TextView fechaHoraAplicacionTV = ItemLista.findViewById(R.id.fechaHoraAplicacionTV);
@@ -56,6 +58,12 @@ public class InsulinaActivaAdapter extends ArrayAdapter<InsulinaActiva> {
 
         Insulina insulina = insuActivaActual.getInsulina();
         //nombreInsulinaTV.setText(String.format("%s - %s", insulina.getNombre(), insulina.getLaboratorio()));
+        if (insuActivaActual.getAplicacionManual()==1){
+            aplicacionIV.setImageResource(R.drawable.insulin_pen_big);
+        } else {
+            aplicacionIV.setImageResource(R.drawable.insulin_pump_big);
+        }
+
         nombreInsulinaTV.setText(String.format("%s ", insulina.getNombre()));
         rapidaTV.setText(insulina.getRapida()==1?R.string.quick:R.string.slow);
         unidadesTV.setText(insuActivaActual.getUnidades().toString());
