@@ -132,12 +132,13 @@ public class InsulinaActivaCalcularActivity extends AppCompatActivity {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyDialogTheme);
             if (hacerBackup){
                 mensaje = getString(porEleccionUsuario ? R.string.store_all_inactive_insulin_confirmation : R.string.store_all_stores_inactive_insulin_confirmation);
+                alertDialog.setTitle(R.string.store_data);
 
             }else {
                 mensaje = getString(porEleccionUsuario ? R.string.delete_all_inactive_insulin_confirmation : R.string.delete_all_stores_inactive_insulin_confirmation);
+                alertDialog.setTitle(R.string.erase_data);
             }
             alertDialog.setMessage(mensaje);
-            alertDialog.setTitle(R.string.delete);
             alertDialog.setIcon(R.drawable.ic_question);
             alertDialog.setCancelable(false);
             alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
